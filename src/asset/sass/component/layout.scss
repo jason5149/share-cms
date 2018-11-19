@@ -1,0 +1,38 @@
+.layout-container {
+  @include position;
+  &.close {
+    margin-left: 80px; 
+  }
+  &.open {
+    margin-left: 256px; 
+  }
+}
+
+.sider-container {
+  height: 100vh;
+  overflow: auto; 
+  @include position(fixed, 0, null, 0, 0);
+  &.close {
+    width: 80px; 
+  }
+  &.open {
+    width: 256px; 
+  }
+}
+
+.header-container {
+  padding: 0;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 1px 5px 3px rgba(0, 0, 0, 0.075);
+  @include position(absolute, 0, 0, null, 0);
+}
+
+.content-container {
+  @include position(absolute, 64px, 0, 62px, 0);
+}
+
+.footer-container {
+  text-align: center;
+  @include position(absolute, null, 0, 0, 0);
+}

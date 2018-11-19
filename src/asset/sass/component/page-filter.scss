@@ -1,0 +1,35 @@
+.page-filter-container {
+  .ant-form-item {
+    margin-right: 0;
+    margin-bottom: 24px;
+    @extend [layout];
+    .ant-form-item-label {
+      width: auto;
+      line-height: 32px;
+      padding-right: 8px;
+    }
+    .ant-form-item-label,
+    .ant-form-item-control-wrapper {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+  .ant-form-item-label {
+    overflow: hidden;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .ant-form-item-control {
+    line-height: 32px;
+  }
+  .ant-form-item-control-wrapper {
+    flex: 1 1;
+  }
+  .filter-submit-buttons {
+    white-space: nowrap;
+    margin-bottom: 24px;
+    .ant-btn {
+      margin-right: 8px;
+    }
+  }
+}

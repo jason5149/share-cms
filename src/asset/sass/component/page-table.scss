@@ -1,0 +1,15 @@
+.page-table-container {
+  .table-container {
+    margin-bottom: 24px;
+    .action-buttons {
+      .action-btn {
+        margin-right: 10px;
+      }
+    }
+  }
+  .pagination-container {
+    @extend [layout];
+    @extend [layout=row];
+    @extend [layout-align="end center"];
+  }
+}
