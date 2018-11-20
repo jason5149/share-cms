@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { Button } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
+import { BASE_PATH } from '@util/const'
 
 @inject(
   'BrandModel',
@@ -43,6 +45,14 @@ class BrandListPage extends Component {
     console.log(currentPage)
   }
 
+  handleActions = type => {
+    const { history } = this.props
+
+    if (type === 'create') {
+      history.push(`${ BASE_PATH }/app/brand/create`)
+    }
+  }
+
   render() {
     const { BrandModel } = this.props
     const { breadcrumbItems, actionsListColumn } = this.state
@@ -57,6 +67,9 @@ class BrandListPage extends Component {
       <div className='view-container'>
         <PageHeader title='品牌商列表' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
+          <div style={{ marginBottom: 24 }}>
+            <Button type='primary' onClick={ () => this.handleActions('create') }>新增品牌商</Button>
+          </div>
           <PageTable 
             rowKey='id'
             total={ brandListTotal }

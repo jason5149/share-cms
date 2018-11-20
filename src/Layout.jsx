@@ -10,6 +10,7 @@ import MenuList from '@component/MenuList'
 const { Header, Content, Footer, Sider } = Layout
 const HomePage = AsyncComponent(() => import('@page/Home'))
 const BrandListPage = AsyncComponent(() => import('@page/Brand/List'))
+const CreateBrandPage = AsyncComponent(() => import('@page/Brand/Create'))
 
 @inject(
   'GlobalModel',
@@ -40,7 +41,8 @@ class BasicLayout extends Component {
         >
           <MenuList data={ menuList } onMenuClick={ this.handleMenuClick } />
         </Sider>
-        <Layout className={ `layout-container ${ collapsed ? 'close' : 'open' }` }>
+        {/* <Layout className={ `layout-container ${ collapsed ? 'close' : 'open' }` }> */}
+        <Layout className='layout-container'>
           <Header className='header-container'>
             <GlobalHeader />
           </Header>
@@ -48,6 +50,7 @@ class BasicLayout extends Component {
             <Switch>
               <Route path={ `${ url }/home` } component={ HomePage } />
               <Route path={ `${ url }/brand/list` } component={ BrandListPage } />
+              <Route path={ `${ url }/brand/create` } component={ CreateBrandPage } />
             </Switch>
           </Content>
           <Footer className='footer-container'>

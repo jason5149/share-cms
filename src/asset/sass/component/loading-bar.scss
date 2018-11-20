@@ -1,0 +1,10 @@
+.loading-bar-container {
+  color: #1890ff;
+  z-index: 2000;
+  font-size: 40px;
+  background: rgba(0, 0, 0, 0.25);
+  @extend [layout];
+  @extend [layout=row];
+  @extend [layout-align="center center"];
+  @include position(fixed, 0, 0, 0, 0);
+}

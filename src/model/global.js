@@ -2,6 +2,9 @@ import { observable, action } from 'mobx'
 
 class GlobalModel {
   @observable
+  loadingStatus = false
+
+  @observable
   collapsed = false
 
   @observable
@@ -130,6 +133,11 @@ class GlobalModel {
     },
   ]
 
+  @action
+  handleToggleLoadingBar = flag => {
+    this.loadingStatus = flag
+  }
+ 
   @action
   handleToggleMenu = () => this.collapsed = !this.collapsed
 }

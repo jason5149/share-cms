@@ -62,3 +62,5 @@ typings/
 
 # custom define
 yarn.*
+yarn-error*
+.cache/
