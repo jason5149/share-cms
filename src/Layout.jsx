@@ -8,9 +8,6 @@ import GlobalHeader from '@component/GlobalHeader'
 import MenuList from '@component/MenuList'
 
 const { Header, Content, Footer, Sider } = Layout
-const HomePage = AsyncComponent(() => import('@page/Home'))
-const BrandListPage = AsyncComponent(() => import('@page/Brand/List'))
-const CreateBrandPage = AsyncComponent(() => import('@page/Brand/Create'))
 
 @inject(
   'GlobalModel',
@@ -48,9 +45,20 @@ class BasicLayout extends Component {
           </Header>
           <Content className='content-container'>
             <Switch>
-              <Route path={ `${ url }/home` } component={ HomePage } />
-              <Route path={ `${ url }/brand/list` } component={ BrandListPage } />
-              <Route path={ `${ url }/brand/create` } component={ CreateBrandPage } />
+              <Route path={ `${ url }/home` } component={ AsyncComponent(() => import('@page/Home')) } />
+              {/* 品牌商管理 */}
+              <Route path={ `${ url }/brand/list` } component={ AsyncComponent(() => import('@page/Brand/List')) } />
+              <Route path={ `${ url }/brand/create` } component={ AsyncComponent(() => import('@page/Brand/Create')) } />
+              {/* 品牌商管理 */}
+              {/* 奖品管理 */}
+              <Route path={ `${ url }/prize/list` } component={ AsyncComponent(() => import('@page/Prize/List')) } />
+              <Route path={ `${ url }/prize/create` } component={ AsyncComponent(() => import('@page/Prize/Create')) } />
+              {/* 奖品管理 */}
+              {/* 热文库管理 */}
+              <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } />
+              <Route path={ `${ url }/article/banner-list` } component={ AsyncComponent(() => import('@page/Article/BannerList')) } />
+              <Route path={ `${ url }/article/create-banner` } component={ AsyncComponent(() => import('@page/Article/CreateBanner')) } />
+              {/* 热文库管理 */}
             </Switch>
           </Content>
           <Footer className='footer-container'>

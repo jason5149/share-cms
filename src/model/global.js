@@ -54,12 +54,12 @@ class GlobalModel {
       ],
     },
     {
-      key:   '/app/prizes',
+      key:   '/app/prize',
       icon:  'shopping',
       title: '奖品管理',
       child: [
         {
-          key:   '/app/prizes/list',
+          key:   '/app/prize/list',
           title: '奖品列表',
         },
       ],

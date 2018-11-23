@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Row, Col, Form, Input, Upload, Radio, Switch, DatePicker, Button, message } from 'antd'
+// import moment from 'moment'
+import { Row, Col, Form, Input, InputNumber, Upload, Radio, Switch, DatePicker, Button, Modal, message } from 'antd'
 import { UPLOAD_FIELD, UPLOAD_URL, MAX_UPLOAD_SIZE } from '@util/const'
 import { formItemLayout, submitFormItemLayout } from '@util/config'
 import { REGEX_IMAGE } from '@util/regex'
@@ -18,7 +19,9 @@ const { RangePicker } = DatePicker
 @observer
 class PageForm extends Component {
   state = {
-    loading: false,
+    loading:        false,
+    previewImage:   '',
+    previewVisible: false,
   }
 
   handleNormFile = e => {
@@ -84,6 +87,54 @@ class PageForm extends Component {
     }
   }
 
+  handlePreview = file => {
+    this.setState({
+      previewImage:   file.url || file.thumbUrl,
+      previewVisible: true,
+    })
+  }
+
+  handleMultipleRemove = (label, file) => {
+    const { onMultiplePreviewRemove } = this.props
+
+    onMultiplePreviewRemove(label, file.response.body)
+  }
+
+  handleMultipleUploadChange = (label, { file, fileList }) => {
+    const { GlobalModel, onMultiplePreviewUpload } = this.props
+    const { handleToggleLoadingBar } = GlobalModel
+
+    if (file.status === 'uploading') {
+      this.setState({
+        loading: true,
+      }, () => {
+        handleToggleLoadingBar(true)
+      })
+
+      return
+    }
+
+    if (file.status === 'done') {
+      this.setState({
+        loading: false,
+      }, () => {
+        handleToggleLoadingBar(false)
+        onMultiplePreviewUpload(label, fileList)
+        message.success('上传成功')
+      })
+    } else if (file.status === 'error') {
+      this.setState({
+        loading: false,
+      }, () => {
+        handleToggleLoadingBar(false)
+        onMultiplePreviewUpload(label, fileList)
+        message.error('上传失败')
+      })
+    }
+  }
+
+  handlePreviewCancel = () => this.setState({ previewVisible: false })
+
   handleSubmit = () => {
     const { form, onSubmit } = this.props
     const { validateFields } = form
@@ -110,6 +161,7 @@ class PageForm extends Component {
       preview, 
       desc,
       src,
+      limit,
       value, 
       required,
       placeholder,
@@ -123,7 +175,6 @@ class PageForm extends Component {
     }
 
     if (type === 'upload') {
-      options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
     } else if (type === 'radio') {
       options.initialValue = value
@@ -131,39 +182,75 @@ class PageForm extends Component {
     } else if (type === 'switch') {
       options.initialValue = value
       options.valuePropName = 'checked'
+    } else if (type === 'date') {
+      options.valuePropName = 'value'
     }
 
-    console.log(field, options)
-
     if (type === 'input') {
-      return (
-        <Col span={ 16 } offset={ 4 } key={ label }>
-          <FormItem label={ label } { ...formItemLayout }>
-            {getFieldDecorator(field, options)(
-              <Input placeholder={ placeholder } />   
-          )}
-          </FormItem>
-        </Col>
-      )
+      if (subType === 'string') {
+        return (
+          <Col span={ 16 } offset={ 4 } key={ label }>
+            <FormItem label={ label } { ...formItemLayout }>
+              {getFieldDecorator(field, options)(
+                <Input placeholder={ placeholder } />   
+            )}
+            </FormItem>
+          </Col>
+        )
+      } else if (subType === 'number') {
+        return (
+          <Col span={ 16 } offset={ 4 } key={ label }>
+            <FormItem label={ label } { ...formItemLayout }>
+              {getFieldDecorator(field, options)(
+                <InputNumber style={{ width: 200 }} placeholder={ placeholder } />   
+            )}
+            </FormItem>
+          </Col>
+        )
+      }
     } else if (type === 'upload') {
-      return (
-        <Col span={ 16 } offset={ 4 } key={ label }>
-          <FormItem label={ label } { ...formItemLayout }>
-            {getFieldDecorator(field, options)(
-              <Upload 
-                name={ UPLOAD_FIELD }
-                action={ UPLOAD_URL }
-                listType='picture-card'
-                showUploadList={ false }
-                onChange={ info => this.handleUploadChange(label, info) }
-                beforeUpload={ this.handleBeforeUpload }
-              >
-                {preview ? <img style={{ width: 100, height: 100 }} src={ preview } alt='' /> : '上传图片'}
-              </Upload> 
-          )}
-          </FormItem>
-        </Col>
-      )
+      if (subType === 'single') {
+        return (
+          <Col span={ 16 } offset={ 4 } key={ label }>
+            <FormItem label={ label } { ...formItemLayout }>
+              {getFieldDecorator(field, options)(
+                <Upload 
+                  name={ UPLOAD_FIELD }
+                  action={ UPLOAD_URL }
+                  listType='picture-card'
+                  showUploadList={ false }
+                  onChange={ info => this.handleUploadChange(label, info) }
+                  beforeUpload={ this.handleBeforeUpload }
+                >
+                  {preview ? <img style={{ width: 88, height: 88 }} src={ preview } alt='' /> : '上传图片'}
+                </Upload> 
+            )}
+            </FormItem>
+          </Col>
+        )
+      } else if (subType === 'multiple') {
+        return (
+          <Col span={ 16 } offset={ 4 } key={ label }>
+            <FormItem label={ label } { ...formItemLayout }>
+              {getFieldDecorator(field, options)(
+                <Upload 
+                  name={ UPLOAD_FIELD }
+                  action={ UPLOAD_URL }
+                  listType='picture-card'
+                  fileList={ preview }
+                  onChange={ info => this.handleMultipleUploadChange(label, info) }
+                  onRemove={ file => this.handleMultipleRemove(label, file) }
+                  onPreview={ this.handlePreview }
+                  beforeUpload={ this.handleBeforeUpload }
+                >
+                  {preview.length >= limit ? null : '上传图片'}
+                </Upload> 
+            )}
+            </FormItem>
+          </Col>
+        )
+      }
+      
     } else if (type === 'radio') {
       return (
         <Col span={ 16 } offset={ 4 } key={ label }>
@@ -194,11 +281,11 @@ class PageForm extends Component {
               {getFieldDecorator(field, options)(
                 <RangePicker
                   style={{ width: '100%' }}
-                  format='YYYY-MM-DD HH:mm:ss'
-                  showTime={{
-                  hideDisabledOptions: true,
-                  defaultValue:        [],
-                }}
+                  format='YYYY-MM-DD'
+                  // showTime={{
+                  //   hideDisabledOptions: true,
+                  //   defaultValue:        [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')],
+                  // }}
                   placeholder={ ['开始日期', '结束日期'] }
                 />
               )}
@@ -211,6 +298,7 @@ class PageForm extends Component {
 
   render() {
     const { data } = this.props
+    const { previewImage, previewVisible } = this.state
 
     return (
       <div className='page-form-container'>
@@ -228,6 +316,9 @@ class PageForm extends Component {
               </FormItem>
             </Col>
           </Row>
+          <Modal visible={ previewVisible } footer={ null } onCancel={ this.handlePreviewCancel }>
+            <img alt='example' style={{ width: '100%' }} src={ previewImage } />
+          </Modal>
         </Form>
       </div>
     )

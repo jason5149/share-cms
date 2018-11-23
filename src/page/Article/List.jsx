@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Button, Modal, message } from 'antd'
+import { Button, Icon, Modal, message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
@@ -12,11 +12,11 @@ const { confirm: Confirm } = Modal
   'BrandModel',
 )
 @observer
-class BrandListPage extends Component {
+class ArticleListPage extends Component {
   state = {
     breadcrumbItems: [
-      { name: '品牌商管理' },
-      { name: '品牌商列表' },
+      { name: '热文库管理' },
+      { name: '热文库列表' },
     ],
     actionsListColumn: [
       { 
@@ -105,9 +105,9 @@ class BrandListPage extends Component {
 
     return (
       <div className='view-container'>
-        <PageHeader title='品牌商列表' extraBreadcrumbItems={ breadcrumbItems } />
+        <PageHeader title='热文库列表' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
-          <div style={{ marginBottom: 24 }}>
+          {/* <div style={{ marginBottom: 24 }}>
             <Button type='primary' onClick={ () => this.handleActions('create') }>新增品牌商</Button>
           </div>
           <PageTable 
@@ -118,11 +118,11 @@ class BrandListPage extends Component {
             pageSize={ 10 }
             dataSource={ brandList }
             onPageChange={ this.handlePageChange }
-          />
+          /> */}
         </PageContent>
       </div>
     )
   }
 }
 
-export default BrandListPage
+export default ArticleListPage

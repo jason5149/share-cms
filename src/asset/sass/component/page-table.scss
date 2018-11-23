@@ -13,3 +13,10 @@
     @extend [layout-align="end center"];
   }
 }
+
+
+.actions-btn-container {
+  .ant-btn {
+    margin-right: 10px;
+  }   
+}

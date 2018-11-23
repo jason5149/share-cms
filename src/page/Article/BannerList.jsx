@@ -9,14 +9,14 @@ import { BASE_PATH } from '@util/const'
 const { confirm: Confirm } = Modal
 
 @inject(
-  'BrandModel',
+  'ArticleModel',
 )
 @observer
-class BrandListPage extends Component {
+class BannerListPage extends Component {
   state = {
     breadcrumbItems: [
-      { name: '品牌商管理' },
-      { name: '品牌商列表' },
+      { name: '热文库管理' },
+      { name: 'Banner列表' },
     ],
     actionsListColumn: [
       { 
@@ -26,10 +26,6 @@ class BrandListPage extends Component {
         render:    (text, record) => {
           return (
             <div className='actions-btn-container'>
-              {/* <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
-                <Icon type='edit' />
-                编辑
-              </Button> */}
               <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
                 删除
               </Button>
@@ -45,19 +41,19 @@ class BrandListPage extends Component {
   }
 
   init() {
-    this.handleSearchBrandList()
+    this.handleSearchBannerList()
   }
 
-  handleSearchBrandList = (currentPage = 1) => {
-    const { BrandModel } = this.props
-    const { queryBrandList } = BrandModel
+  handleSearchBannerList = (currentPage = 1) => {
+    const { ArticleModel } = this.props
+    const { queryBannerList } = ArticleModel
 
     const params = {
       currentPage,
       pageSize: 10,
     }
 
-    queryBrandList(params)
+    queryBannerList(params)
   }
 
   handlePageChange = currentPage => {
@@ -65,25 +61,25 @@ class BrandListPage extends Component {
   }
 
   handleActions = (type, info) => {
-    const { history, BrandModel } = this.props
-    const { deleteBrand } = BrandModel
+    const { history, ArticleModel } = this.props
+    const { deleteBanner } = ArticleModel
 
     if (type === 'create') {
-      history.push(`${ BASE_PATH }/app/brand/create`)
+      history.push(`${ BASE_PATH }/app/article/createBanner`)
     } else if (type === 'remove') {
       Confirm({
-        title:      '删除品牌商',
-        content:    '您确认要该删除品牌商吗？',
+        title:      '删除Banner',
+        content:    '您确认要该删除Banner吗？',
         okText:     '确认',
         cancelText: '取消',
         onOk:       async() => {
           const { id } = info
-          const result = await deleteBrand({ id })
+          const result = await deleteBanner({ id })
 
           if (result) {
             message.success('删除成功')
 
-            this.handleSearchBrandList()
+            this.handleSearchBannerList()
           }
         },
         onCancel() {
@@ -94,29 +90,29 @@ class BrandListPage extends Component {
   }
 
   render() {
-    const { BrandModel } = this.props
+    const { ArticleModel } = this.props
     const { breadcrumbItems, actionsListColumn } = this.state
     const { 
-      brandList, 
-      brandListTotal, 
-      brandListColumn,
-      brandListPageNum, 
-    } = BrandModel
+      bannerList, 
+      bannerListTotal, 
+      bannerListColumn,
+      bannerListPageNum, 
+    } = ArticleModel
 
     return (
       <div className='view-container'>
-        <PageHeader title='品牌商列表' extraBreadcrumbItems={ breadcrumbItems } />
+        <PageHeader title='Banner列表' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
           <div style={{ marginBottom: 24 }}>
-            <Button type='primary' onClick={ () => this.handleActions('create') }>新增品牌商</Button>
+            <Button type='primary' onClick={ () => this.handleActions('create') }>新增Banner</Button>
           </div>
           <PageTable 
             rowKey='id'
-            total={ brandListTotal }
-            columns={ brandListColumn.concat(actionsListColumn) }
-            pageNum={ brandListPageNum }
+            total={ bannerListTotal }
+            columns={ bannerListColumn.concat(actionsListColumn) }
+            pageNum={ bannerListPageNum }
             pageSize={ 10 }
-            dataSource={ brandList }
+            dataSource={ bannerList }
             onPageChange={ this.handlePageChange }
           />
         </PageContent>
@@ -125,4 +121,4 @@ class BrandListPage extends Component {
   }
 }
 
-export default BrandListPage
+export default BannerListPage

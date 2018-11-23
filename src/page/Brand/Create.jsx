@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import { message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
+import { BASE_PATH } from '../../util/const'
 // import { BASE_PATH } from '@util/const'
 
 @inject(
@@ -13,15 +15,58 @@ class CreateBrandPage extends Component {
   state = {
     breadcrumbItems: [
       { name: '品牌商管理' },
+      { name: '品牌商列表', link: `${  BASE_PATH }/app/brand/list` },
       { name: '添加品牌商' },
     ],
   }
 
-  handleSubmit = (error, values) => {
-    console.log(error, values)
+  handleSubmit = async (error, values) => {
+    const { BrandModel } = this.props
+    const { createBrand } = BrandModel
+
     if (error) return
 
-    console.log(values)
+    const { 
+      name,
+      isImplantation,
+      logoImage,
+      brandAdImage, 
+      brandAdUrl,
+      standardIntegral,
+      readNumber,
+      status,
+      validDate,
+    } = values
+
+    const logoImages = logoImage.map(value => value.response.body)[0]
+    const brandAdImages = brandAdImage.map(value => value.response.body)[0]
+    const implantationStartTime = validDate[0].unix() * 1000
+    const implantationEndTime = validDate[1].unix() * 1000
+
+    const params = {
+      name,
+      isImplantation: isImplantation ? 1 : 0,
+      logoImage:      logoImages,
+      brandAdImage:   brandAdImages,
+      brandAdUrl,
+      standardIntegral,
+      readNumber,
+      implantationStartTime,
+      implantationEndTime,
+      status:         status ? 1 : 0,
+    }
+
+    console.log(params)
+
+    const result = await createBrand(params)
+
+    if (result) {
+      message.success('添加成功')
+
+      setTimeout(() => {
+        this.handleCancel()
+      }, 500)
+    }
   }
 
   handleCancel = () => {

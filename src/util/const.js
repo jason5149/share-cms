@@ -8,3 +8,9 @@ export const ADVERTISING_OPTIONS = [
   { name: '是', value: 1 }, 
   { name: '否', value: 0 }, 
 ]
+
+export const PRIZE_TYPE_OPTIONS = [
+  { name: '实物类', value: 1 },
+  { name: '现金类', value: 2 },
+  { name: '卡券类', value: 3 },
+]
