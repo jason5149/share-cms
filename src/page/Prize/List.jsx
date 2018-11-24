@@ -24,8 +24,9 @@ class PrizeListPage extends Component {
         render:    (text, record) => {
           return (
             <div className='actions-btn-container'>
-              <Button type='primary'>编辑</Button>
-              <Button type='error'>删除</Button>
+              <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
+                删除
+              </Button>
             </div>
           )
         },

@@ -21,11 +21,9 @@ class CreateBrandPage extends Component {
   }
 
   handleSubmit = async (error, values) => {
+    if (error) return
     const { BrandModel } = this.props
     const { createBrand } = BrandModel
-
-    if (error) return
-
     const { 
       name,
       isImplantation,
@@ -37,12 +35,10 @@ class CreateBrandPage extends Component {
       status,
       validDate,
     } = values
-
     const logoImages = logoImage.map(value => value.response.body)[0]
     const brandAdImages = brandAdImage.map(value => value.response.body)[0]
     const implantationStartTime = validDate[0].unix() * 1000
     const implantationEndTime = validDate[1].unix() * 1000
-
     const params = {
       name,
       isImplantation: isImplantation ? 1 : 0,
@@ -55,8 +51,6 @@ class CreateBrandPage extends Component {
       implantationEndTime,
       status:         status ? 1 : 0,
     }
-
-    console.log(params)
 
     const result = await createBrand(params)
 

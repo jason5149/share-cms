@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-// import moment from 'moment'
 import { Row, Col, Form, Input, InputNumber, Upload, Radio, Switch, DatePicker, Button, Modal, message } from 'antd'
 import { UPLOAD_FIELD, UPLOAD_URL, MAX_UPLOAD_SIZE } from '@util/const'
 import { formItemLayout, submitFormItemLayout } from '@util/config'
 import { REGEX_IMAGE } from '@util/regex'
 
 const { Item: FormItem } = Form
+const { RangePicker } = DatePicker
 const { 
   Group: RadioGroup,
 } = Radio
-const { RangePicker } = DatePicker
 
 @Form.create()
 @inject(
@@ -19,27 +18,27 @@ const { RangePicker } = DatePicker
 @observer
 class PageForm extends Component {
   state = {
-    loading:        false,
+    uploading:      false,
     previewImage:   '',
     previewVisible: false,
   }
 
   handleNormFile = e => {
-    console.log('Upload event:', e)
-
-    if (Array.isArray(e)) {
+    if (!e || !e.fileList) {
       return e
     }
-
-    return e && e.fileList
+  
+    const { fileList } = e
+    
+    return fileList
   }
 
   handleBeforeUpload = file => {
-    const { loading } = this.state
+    const { uploading } = this.state
     const { name, size } = file
 
-    if (loading) {
-      message.warning('上一个正在上传，请稍后')
+    if (uploading) {
+      message.warning('正在上传中，请稍后再试')
       return false
     }
     if (!REGEX_IMAGE.test(name)) {
@@ -54,79 +53,67 @@ class PageForm extends Component {
     return true
   }
 
-  handleUploadChange = (label, info) => {
-    const { GlobalModel, onPreviewUpload } = this.props
-    const { handleToggleLoadingBar } = GlobalModel
+  handleUploadChange = ({ file }, label) => {
+    const { onPreviewUpload } = this.props
 
-    if (info.file.status === 'uploading') {
+    if (file.status === 'uploading') {
       this.setState({
-        loading: true,
-      }, () => {
-        handleToggleLoadingBar(true)
+        uploading: true,
       })
-
       return
-    }
+    } 
 
-    if (info.file.status === 'done') {
+    if (file.status === 'done') {
       this.setState({
-        loading: false,
+        uploading: false,
       }, () => {
-        handleToggleLoadingBar(false)
-        onPreviewUpload(label, info.file.response.body)
+        onPreviewUpload(label, file.response.body)
         message.success('上传成功')
       })
-    } else if (info.file.status === 'error') {
+    } else if (file.status === 'error') {
       this.setState({
-        loading: false,
+        uploading: false,
       }, () => {
-        handleToggleLoadingBar(false)
         onPreviewUpload(label, '')
         message.error('上传失败')
       })
     }
   }
 
-  handlePreview = file => {
+  handleMultiplePreview = file => {
     this.setState({
       previewImage:   file.url || file.thumbUrl,
       previewVisible: true,
     })
   }
 
-  handleMultipleRemove = (label, file) => {
+  handleMultipleRemove = (file, label) => {
     const { onMultiplePreviewRemove } = this.props
 
     onMultiplePreviewRemove(label, file.response.body)
   }
 
-  handleMultipleUploadChange = (label, { file, fileList }) => {
-    const { GlobalModel, onMultiplePreviewUpload } = this.props
-    const { handleToggleLoadingBar } = GlobalModel
-
+  handleMultipleUploadChange = ({ file, fileList }, label) => {
+    const { onMultiplePreviewUpload } = this.props
+    
     if (file.status === 'uploading') {
       this.setState({
-        loading: true,
-      }, () => {
-        handleToggleLoadingBar(true)
+        uploading: true,
       })
-
       return
     }
 
     if (file.status === 'done') {
       this.setState({
-        loading: false,
+        uploading: false,
       }, () => {
-        handleToggleLoadingBar(false)
         onMultiplePreviewUpload(label, fileList)
         message.success('上传成功')
       })
     } else if (file.status === 'error') {
       this.setState({
-        loading: false,
+        uploading: false,
       }, () => {
-        handleToggleLoadingBar(false)
         onMultiplePreviewUpload(label, fileList)
         message.error('上传失败')
       })
@@ -175,6 +162,7 @@ class PageForm extends Component {
     }
 
     if (type === 'upload') {
+      // options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
     } else if (type === 'radio') {
       options.initialValue = value
@@ -219,8 +207,8 @@ class PageForm extends Component {
                   action={ UPLOAD_URL }
                   listType='picture-card'
                   showUploadList={ false }
-                  onChange={ info => this.handleUploadChange(label, info) }
                   beforeUpload={ this.handleBeforeUpload }
+                  onChange={ info => this.handleUploadChange(info, label) }
                 >
                   {preview ? <img style={{ width: 88, height: 88 }} src={ preview } alt='' /> : '上传图片'}
                 </Upload> 
@@ -238,10 +226,10 @@ class PageForm extends Component {
                   action={ UPLOAD_URL }
                   listType='picture-card'
                   fileList={ preview }
-                  onChange={ info => this.handleMultipleUploadChange(label, info) }
-                  onRemove={ file => this.handleMultipleRemove(label, file) }
-                  onPreview={ this.handlePreview }
                   beforeUpload={ this.handleBeforeUpload }
+                  onChange={ info => this.handleMultipleUploadChange(info, label) }
+                  onPreview={ this.handleMultiplePreview }
+                  onRemove={ file => this.handleMultipleRemove(label, file) }
                 >
                   {preview.length >= limit ? null : '上传图片'}
                 </Upload> 
@@ -250,7 +238,6 @@ class PageForm extends Component {
           </Col>
         )
       }
-      
     } else if (type === 'radio') {
       return (
         <Col span={ 16 } offset={ 4 } key={ label }>

@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = () => {
   const output = {
@@ -24,6 +25,17 @@ module.exports = () => {
       statsFilename:     'stats.json',
       statsOptions:      null,
       logLevel:          'info',
+    }),
+    new ParallelUglifyPlugin({
+      cacheDir: '.cache/',
+      uglifyJS: {
+        output: {
+          comments: false,
+        },
+        compress: {
+          warnings: false,
+        },
+      },
     }),
   ]
   

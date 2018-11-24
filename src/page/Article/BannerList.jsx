@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Button, Modal, message } from 'antd'
+import { Button } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
 import { BASE_PATH } from '@util/const'
-
-const { confirm: Confirm } = Modal
 
 @inject(
   'ArticleModel',
@@ -23,15 +21,6 @@ class BannerListPage extends Component {
         title:     '操作', 
         dataIndex: 'actions', 
         key:       'actions', 
-        render:    (text, record) => {
-          return (
-            <div className='actions-btn-container'>
-              <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
-                删除
-              </Button>
-            </div>
-          )
-        },
       },
     ],
   }
@@ -60,32 +49,11 @@ class BannerListPage extends Component {
     console.log(currentPage)
   }
 
-  handleActions = (type, info) => {
-    const { history, ArticleModel } = this.props
-    const { deleteBanner } = ArticleModel
+  handleActions = type => {
+    const { history } = this.props
 
     if (type === 'create') {
-      history.push(`${ BASE_PATH }/app/article/createBanner`)
-    } else if (type === 'remove') {
-      Confirm({
-        title:      '删除Banner',
-        content:    '您确认要该删除Banner吗？',
-        okText:     '确认',
-        cancelText: '取消',
-        onOk:       async() => {
-          const { id } = info
-          const result = await deleteBanner({ id })
-
-          if (result) {
-            message.success('删除成功')
-
-            this.handleSearchBannerList()
-          }
-        },
-        onCancel() {
-          console.log('Cancel Remove')
-        },
-      })
+      history.push(`${ BASE_PATH }/app/article/create-banner`)
     }
   }
 

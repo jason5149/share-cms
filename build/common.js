@@ -7,7 +7,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin')
 const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin')
 
@@ -123,17 +122,6 @@ const build = env => {
       cleanWebpackOptions
     ),
     new WebpackBar(),
-    new ParallelUglifyPlugin({
-      cacheDir: '.cache/',
-      uglifyJS: {
-        output: {
-          comments: false,
-        },
-        compress: {
-          warnings: false,
-        },
-      },
-    }),
   ]
 
   return {

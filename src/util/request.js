@@ -8,6 +8,7 @@ import { stringify } from 'qs'
  * @param {*} formType 
  */
 const handleResponse = (response, formType) => {
+  console.log('response', response)
   return response[formType]()
 }
 

@@ -65,69 +65,69 @@ class GlobalModel {
       ],
     },
     {
-      key:   '/app/missions', 
+      key:   '/app/mission', 
       icon:  'file-done',
       title: '任务管理',
       child: [
         {
-          key:   '/app/missions/basic-list',
+          key:   '/app/mission/basic-list',
           title: '任务列表',
         },
         {
-          key:   '/app/missions/exchange-list',
+          key:   '/app/mission/exchange-list',
           title: '积分兑换列表',
         },
       ],
     },
     {
-      key:   '/app/wechats',
+      key:   '/app/wechat',
       icon:  'wechat',
       title: '微信管理',
       child: [
         {
-          key:   '/app/wechats/repeat',
+          key:   '/app/wechat/repeat',
           title: '回复配置',
         },
         {
-          key:   '/app/wechats/menu',
+          key:   '/app/wechat/menu',
           title: '菜单配置',
         },
       ],
     },
     {
-      key:   '/app/follows',
+      key:   '/app/follow',
       icon:  'share-alt',
       title: '关注页管理',
       child: [
         {
-          key:   '/app/follows/config',
+          key:   '/app/follow/config',
           title: '关注页配置',
         },
       ],
     },
     {
-      key:   '/app/articles',
+      key:   '/app/article',
       icon:  'file-text',
       title: '热文库管理',
       child: [
         {
-          key:   '/app/articles/banner-list',
-          title: 'Banner列表',
+          key:   '/app/article/list',
+          title: '热文库列表',
         },
         {
-          key:   '/app/articles/articles-list',
-          title: '热文列表',
+          key:   '/app/article/banner-list',
+          title: 'Banner列表',
         },
       ],
     },
     {
-      key:   '/app/promotions',
+      key:   '/app/promotion',
       icon:  'red-envelope',
       title: '推广中心',
       child: [
         {
-          key:   '/app/promotions/channel-list',
-          title: '推广渠道列表',
+          key:   '/app/promotion/channel-list',
+          title: '渠道列表',
         },
       ],
     },
@@ -135,6 +135,8 @@ class GlobalModel {
 
   @action
   handleToggleLoadingBar = flag => {
+    if (flag === this.loadingStatus) return
+    
     this.loadingStatus = flag
   }
  

@@ -55,10 +55,14 @@ class BasicLayout extends Component {
               <Route path={ `${ url }/prize/create` } component={ AsyncComponent(() => import('@page/Prize/Create')) } />
               {/* 奖品管理 */}
               {/* 热文库管理 */}
-              <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } />
+              {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}
               <Route path={ `${ url }/article/banner-list` } component={ AsyncComponent(() => import('@page/Article/BannerList')) } />
               <Route path={ `${ url }/article/create-banner` } component={ AsyncComponent(() => import('@page/Article/CreateBanner')) } />
               {/* 热文库管理 */}
+              {/* 推广中心 */}
+              <Route path={ `${ url }/promotion/channel-list` } component={ AsyncComponent(() => import('@page/Promotion/ChannelList')) } />
+              <Route path={ `${ url }/promotion/create-channel` } component={ AsyncComponent(() => import('@page/Promotion/CreateChannel')) } />
+              {/* 推广中心 */}
             </Switch>
           </Content>
           <Footer className='footer-container'>
