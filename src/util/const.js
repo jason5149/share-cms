@@ -1,4 +1,4 @@
-export const BASE_PATH = ''
+export const BASE_PATH = process.env.NODE_ENV === 'development' ? '' : '/backend'
 export const API = '/share-cms'
 export const UPLOAD_FIELD = 'image'
 export const UPLOAD_URL = `${ API }/common/upload`
