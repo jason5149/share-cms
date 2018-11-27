@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const app = express()
 const history = require('connect-history-api-fallback')
 
-const PORT = 4444
+const PORT = 2222
 
 const staticFile = express.static('dist')
 
