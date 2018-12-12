@@ -18,7 +18,7 @@ class EditBrandPage extends Component {
       { name: '品牌商列表', link: `${  BASE_PATH }/app/brand/list` },
       { name: '编辑品牌商' },
     ],
-    mode:   'edit',
+    // mode:   'edit',
     status: false,
   }
 
@@ -27,18 +27,18 @@ class EditBrandPage extends Component {
   }
 
   init() {
-    const { location } = this.props
-    const { search } = location
+    // const { location } = this.props
+    // const { search } = location
 
     /* eslint-disable-next-line */
-    const params = new URLSearchParams(search)
-    const mode = params.get('mode')
+    // const params = new URLSearchParams(search)
+    // const mode = params.get('mode')
 
-    this.setState({
-      mode,
-    }, () => {
-      this.handleSearchBrandDetail()
-    })
+    // this.setState({
+      // mode,
+    // }, () => {
+    this.handleSearchBrandDetail()
+    // })
   }
 
   handleSearchBrandDetail = async() => {
