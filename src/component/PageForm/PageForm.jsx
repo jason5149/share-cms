@@ -24,6 +24,7 @@ class PageForm extends Component {
   }
 
   handleNormFile = e => {
+    console.log(e)
     if (!e || !e.fileList) {
       return e
     }
@@ -161,17 +162,23 @@ class PageForm extends Component {
       ],
     }
 
-    if (type === 'upload') {
-      // options.valuePropName = 'fileList'
+    if (preview) {
+      console.log('form value: ', preview)
+    } else {
+      console.log('form value: ', value)
+    }
+
+    if (['input', 'radio', 'switch', 'date'].indexOf(type) !== -1) {
+      options.initialValue = value
+      if (type === 'switch') {
+        options.valuePropName = 'checked'
+      } else {
+        options.valuePropName = 'value'
+      }
+    } else if (type === 'upload') {
+      options.initialValue = preview
+      options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
-    } else if (type === 'radio') {
-      options.initialValue = value
-      options.valuePropName = 'value'
-    } else if (type === 'switch') {
-      options.initialValue = value
-      options.valuePropName = 'checked'
-    } else if (type === 'date') {
-      options.valuePropName = 'value'
     }
 
     if (type === 'input') {

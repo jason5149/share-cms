@@ -5,6 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
 import { BASE_PATH } from '@util/const'
+import { base64encode } from '@util/tool'
 
 @inject(
   'ArticleModel',
@@ -21,6 +22,18 @@ class BannerListPage extends Component {
         title:     '操作', 
         dataIndex: 'actions', 
         key:       'actions', 
+        render:    (text, record) => {
+          return (
+            <div className='actions-btn-container'>
+              <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
+                编辑
+              </Button>
+              <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
+                删除
+              </Button>
+            </div>
+          )
+        },
       },
     ],
   }
@@ -49,11 +62,13 @@ class BannerListPage extends Component {
     console.log(currentPage)
   }
 
-  handleActions = type => {
+  handleActions = (type, item) => {
     const { history } = this.props
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/app/article/create-banner`)
+    } else if (type === 'edit') {
+      history.push(`${ BASE_PATH }/app/article/${ item.id }?mode=edit&params=${ base64encode(item) }`)
     }
   }
 

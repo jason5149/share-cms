@@ -26,10 +26,9 @@ class BrandListPage extends Component {
         render:    (text, record) => {
           return (
             <div className='actions-btn-container'>
-              {/* <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
-                <Icon type='edit' />
+              <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
                 编辑
-              </Button> */}
+              </Button>
               <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
                 删除
               </Button>
@@ -64,12 +63,14 @@ class BrandListPage extends Component {
     console.log(currentPage)
   }
 
-  handleActions = (type, info) => {
+  handleActions = (type, item) => {
     const { history, BrandModel } = this.props
     const { deleteBrand } = BrandModel
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/app/brand/create`)
+    } else if (type === 'edit') {
+      history.push(`${ BASE_PATH }/app/brand/${ item.id }?mode=${ type }`)
     } else if (type === 'remove') {
       Confirm({
         title:      '删除品牌商',
@@ -77,7 +78,7 @@ class BrandListPage extends Component {
         okText:     '确认',
         cancelText: '取消',
         onOk:       async() => {
-          const { id } = info
+          const { id } = item
           const result = await deleteBrand({ id })
 
           if (result) {

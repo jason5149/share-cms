@@ -49,6 +49,7 @@ class BasicLayout extends Component {
               {/* 品牌商管理 */}
               <Route path={ `${ url }/brand/list` } component={ AsyncComponent(() => import('@page/Brand/List')) } />
               <Route path={ `${ url }/brand/create` } component={ AsyncComponent(() => import('@page/Brand/Create')) } />
+              <Route path={ `${ url }/brand/:id` } component={ AsyncComponent(() => import('@page/Brand/Edit')) } />
               {/* 品牌商管理 */}
               {/* 奖品管理 */}
               <Route path={ `${ url }/prize/list` } component={ AsyncComponent(() => import('@page/Prize/List')) } />
@@ -58,6 +59,7 @@ class BasicLayout extends Component {
               {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}
               <Route path={ `${ url }/article/banner-list` } component={ AsyncComponent(() => import('@page/Article/BannerList')) } />
               <Route path={ `${ url }/article/create-banner` } component={ AsyncComponent(() => import('@page/Article/CreateBanner')) } />
+              <Route path={ `${ url }/article/:id` } component={ AsyncComponent(() => import('@page/Article/EditBanner')) } />
               {/* 热文库管理 */}
               {/* 推广中心 */}
               <Route path={ `${ url }/promotion/channel-list` } component={ AsyncComponent(() => import('@page/Promotion/ChannelList')) } />

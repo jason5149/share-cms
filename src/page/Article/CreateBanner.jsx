@@ -45,7 +45,7 @@ class CreateBannerPage extends Component {
       endTime,
       status: status ? 1 : 0,
     }
-
+    
     const result = await createBanner(params)
 
     if (result) {
