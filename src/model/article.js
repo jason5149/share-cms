@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 import React from 'react'
 import moment from 'moment'
 import { Badge, message } from 'antd'
-import { queryBannerList, queryBannerDetail, createBanner, editBanner } from '@service/article'
+import { queryBannerList, queryBannerDetail, createBanner, updateBanner, deleteBanner } from '@service/article'
 import { BANNER_TYPE_OPTIONS, BANNER_TYPE_DESC } from '@util/const'
 
 class ArticleModel {
@@ -81,8 +81,8 @@ class ArticleModel {
   }
 
   @action
-  editBanner = async params => {
-    const result = await editBanner(params)
+  updateBanner = async params => {
+    const result = await updateBanner(params)
 
     if (result.code !== '10000') {
       message.error(result.message)
@@ -92,17 +92,17 @@ class ArticleModel {
     return true
   }
 
-  // @action
-  // deleteBanner = async params => {
-  //   const result = await deleteBanner(params)
+  @action
+  deleteBanner = async params => {
+    const result = await deleteBanner(params)
 
-  //   if (result.code !== '10000') {
-  //     message.error(result.message)
-  //     return
-  //   }
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
 
-  //   return true
-  // }
+    return true
+  }
 
   @action
   setPreviewImg = (label, url) => {

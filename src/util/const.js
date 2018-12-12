@@ -35,3 +35,8 @@ export const BANNER_TYPE_DESC = {
   1: '外部',
   2: '内部',
 }
+
+export const STATUS_DESC = {
+  0: '关闭',
+  1: '正常',
+}

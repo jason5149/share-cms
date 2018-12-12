@@ -10,14 +10,30 @@ import { BASE_PATH } from '@util/const'
   'PrizeModel',
 )
 @observer
-class CreatePrizePage extends Component {
+class EditPrizePage extends Component {
   state = {
     breadcrumbItems: [
       { name: '奖品管理' },
       { name: '奖品列表', link: `${  BASE_PATH }/app/prize/list` },
-      { name: '添加奖品' },
+      { name: '编辑奖品' },
     ],
+    status: false,
   }
+
+  componentDidMount() {
+    this.init()
+  }
+
+  init() {
+    this.handleSearchPrizeDetail()
+  }
+
+  handleSearchPrizeDetail = () => {
+    const { match } = this.props
+    const { params } = match
+
+    console.log(params)
+  } 
 
   handleSubmit = async (error, values) => {
     const { PrizeModel } = this.props
@@ -84,25 +100,27 @@ class CreatePrizePage extends Component {
 
   render() {
     const { PrizeModel } = this.props
-    const { breadcrumbItems } = this.state
+    const { breadcrumbItems, status } = this.state
     const { prizeFormItems, setPreviewImg, setMultiplePreviewImg, removeMultiplePreviewImg } = PrizeModel
 
     return (
       <div className='view-container'>
-        <PageHeader title='添加奖品' extraBreadcrumbItems={ breadcrumbItems } />
+        <PageHeader title='编辑奖品' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
-          <PageForm 
-            data={ prizeFormItems } 
-            onPreviewUpload={ setPreviewImg }
-            onMultiplePreviewUpload={ setMultiplePreviewImg }
-            onMultiplePreviewRemove={ removeMultiplePreviewImg }
-            onSubmit={ this.handleSubmit }
-            onCancel={ this.handleCancel }
-          />
+          {status && (
+            <PageForm 
+              data={ prizeFormItems } 
+              onPreviewUpload={ setPreviewImg }
+              onMultiplePreviewUpload={ setMultiplePreviewImg }
+              onMultiplePreviewRemove={ removeMultiplePreviewImg }
+              onSubmit={ this.handleSubmit }
+              onCancel={ this.handleCancel }
+            />
+          )}
         </PageContent>
       </div>
     )
   }
 }
 
-export default CreatePrizePage
+export default EditPrizePage

@@ -1,7 +1,8 @@
+import React from 'react'
 import { observable, action } from 'mobx'
-import { message } from 'antd'
+import { Badge, message } from 'antd'
 import { queryPrizeList, createPrize } from '@service/prize'
-import { PRIZE_TYPE_OPTIONS } from '@util/const'
+import { PRIZE_TYPE_OPTIONS, PRIZE_TYPE_DESC } from '@util/const'
 
 class PrizeModel {
   @observable
@@ -13,12 +14,17 @@ class PrizeModel {
   @observable
   prizeListColumn = [
     { title: '奖品名称', dataIndex: 'name', key: 'name' },
-    { title: '奖品类型', dataIndex: 'type', key: 'type' },
+    { title: '奖品类型', dataIndex: 'type', key: 'type', render: text => <span>{PRIZE_TYPE_DESC[text]}</span> },
     { title: '品牌', dataIndex: 'brand', key: 'brand' },
     { title: '库存', dataIndex: 'stock', key: 'stock' },
     { title: '剩余库存', dataIndex: 'surplusStock', key: 'surplusStock' },
     { title: '兑换积分', dataIndex: 'convertibility', key: 'convertibility' },
-    { title: '状态', dataIndex: 'status', key: 'status' },
+    { 
+      title:     '状态', 
+      dataIndex: 'status', 
+      key:       'status', 
+      render:    text => text === 1 ? <Badge status='success' text='正常' /> : <Badge status='error' text='关闭' />, 
+    },
     { title: '创建时间', dataIndex: 'createTime', key: 'createTime' },
   ]
 

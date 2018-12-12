@@ -54,6 +54,7 @@ class BasicLayout extends Component {
               {/* 奖品管理 */}
               <Route path={ `${ url }/prize/list` } component={ AsyncComponent(() => import('@page/Prize/List')) } />
               <Route path={ `${ url }/prize/create` } component={ AsyncComponent(() => import('@page/Prize/Create')) } />
+              <Route path={ `${ url }/prize/:id` } component={ AsyncComponent(() => import('@page/Prize/Edit')) } />
               {/* 奖品管理 */}
               {/* 热文库管理 */}
               {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}

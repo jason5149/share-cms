@@ -69,7 +69,7 @@ class EditBannerPage extends Component {
   handleSubmit = async (error, values) => {
     if (error) return
     const { ArticleModel, match } = this.props
-    const { editBanner } = ArticleModel
+    const { updateBanner } = ArticleModel
     const {
       title,
       type,
@@ -93,7 +93,7 @@ class EditBannerPage extends Component {
       status: status ? 1 : 0,
     }
 
-    const result = await editBanner({ id: match.params.id, ...params })
+    const result = await updateBanner({ id: match.params.id, ...params })
 
     if (result) {
       message.success('编辑成功')

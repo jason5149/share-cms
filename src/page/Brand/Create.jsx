@@ -4,8 +4,7 @@ import { message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
-import { BASE_PATH } from '../../util/const'
-// import { BASE_PATH } from '@util/const'
+import { BASE_PATH } from '@util/const'
 
 @inject(
   'BrandModel',
