@@ -65,6 +65,7 @@ class BasicLayout extends Component {
               {/* 推广中心 */}
               <Route path={ `${ url }/promotion/channel-list` } component={ AsyncComponent(() => import('@page/Promotion/ChannelList')) } />
               <Route path={ `${ url }/promotion/create-channel` } component={ AsyncComponent(() => import('@page/Promotion/CreateChannel')) } />
+              <Route path={ `${ url }/promotion/:id` } component={ AsyncComponent(() => import('@page/Promotion/EditChannel')) } />
               {/* 推广中心 */}
             </Switch>
           </Content>

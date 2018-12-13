@@ -5,6 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'ArticleModel',
@@ -32,7 +33,8 @@ class CreateBannerPage extends Component {
       validDate,
       status,
     } = values
-    const images = image.map(value => value.response.body)[0]
+    // const images = image.map(value => value.response.body)[0]
+    const images = handleImageObj(image[image.length - 1])
     const startTime = validDate[0].unix() * 1000
     const endTime = validDate[1].unix() * 1000
     const params = {

@@ -17,3 +17,12 @@ export const base64decode = (item, type = 'json') => {
   }
 }
 
+export const handleImageObj = file => {
+  if (file && file.url) {
+    return file.url
+  } else if (file.response) {
+    return file.response.body
+  } else {
+    return ''
+  }
+}

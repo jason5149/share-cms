@@ -23,6 +23,14 @@ class PageForm extends Component {
     previewVisible: false,
   }
 
+  componentDidUpdate() {
+    this.update()
+  }
+
+  update() {
+    console.log(this.props)
+  }
+
   handleNormFile = e => {
     console.log(e)
     if (!e || !e.fileList) {
@@ -35,6 +43,7 @@ class PageForm extends Component {
   }
 
   handleBeforeUpload = file => {
+    console.log(file)
     const { uploading } = this.state
     const { name, size } = file
 
@@ -68,7 +77,7 @@ class PageForm extends Component {
       this.setState({
         uploading: false,
       }, () => {
-        onPreviewUpload(label, file.response.body)
+        onPreviewUpload(label, file)
         message.success('上传成功')
       })
     } else if (file.status === 'error') {
@@ -138,6 +147,24 @@ class PageForm extends Component {
     onCancel()
   }
 
+  renderImage = preview => {
+    if (preview[0]) {
+      if (preview[0].url) {
+        return (
+          <img style={{ width: 88, height: 88 }} src={ preview[0].url } alt='' />
+        )
+      } else if (preview[0].response.body) {
+        return (
+          <img style={{ width: 88, height: 88 }} src={ preview[0].response.body } alt='' />
+        )
+      } else {
+        return '上传图片'  
+      }
+    } else {
+      return '上传图片'
+    }
+  }
+
   renderFormItem = item => {
     const { form } = this.props
     const { getFieldDecorator } = form
@@ -162,12 +189,6 @@ class PageForm extends Component {
       ],
     }
 
-    if (preview) {
-      console.log('form value: ', preview)
-    } else {
-      console.log('form value: ', value)
-    }
-
     if (['input', 'radio', 'switch', 'date'].indexOf(type) !== -1) {
       options.initialValue = value
       if (type === 'switch') {
@@ -176,10 +197,14 @@ class PageForm extends Component {
         options.valuePropName = 'value'
       }
     } else if (type === 'upload') {
-      options.initialValue = preview
+      if (preview) {
+        options.initialValue = preview
+      }
       options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
     }
+
+    console.log(options)
 
     if (type === 'input') {
       if (subType === 'string') {
@@ -217,7 +242,7 @@ class PageForm extends Component {
                   beforeUpload={ this.handleBeforeUpload }
                   onChange={ info => this.handleUploadChange(info, label) }
                 >
-                  {preview ? <img style={{ width: 88, height: 88 }} src={ preview } alt='' /> : '上传图片'}
+                  {this.renderImage(preview)}
                 </Upload> 
             )}
             </FormItem>
@@ -232,7 +257,7 @@ class PageForm extends Component {
                   name={ UPLOAD_FIELD }
                   action={ UPLOAD_URL }
                   listType='picture-card'
-                  fileList={ preview }
+                  // fileList={ preview }
                   beforeUpload={ this.handleBeforeUpload }
                   onChange={ info => this.handleMultipleUploadChange(info, label) }
                   onPreview={ this.handleMultiplePreview }

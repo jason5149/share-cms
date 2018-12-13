@@ -3,7 +3,7 @@ import { API } from '@util/const'
 
 export const queryBannerList = params => Get(`${ API }/common/bannerList`, params)
 
-export const queryBannerDetail = params => Get(`${ API }/common/banner`, params)
+export const queryBannerDetail = params => Get(`${ API }/common/banner/${ params.id }`)
 
 export const createBanner = params => Post(`${ API }/common/insertBanner`, params)
 

@@ -5,6 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'PrizeModel',
@@ -42,9 +43,9 @@ class CreatePrizePage extends Component {
       status,
     } = values
 
-    const coverImgStr = coverImg.map(value => value.response.body)[0]
-    const bannerImgStr = bannerImg.map(value => value.response.body).join(',')
-    const detailImgStr = detailImg.map(value => value.response.body).join(',')
+    const coverImgStr = handleImageObj(coverImg[coverImg.length - 1])
+    const bannerImgStr = bannerImg.map(value => handleImageObj(value)).join(',')
+    const detailImgStr = detailImg.map(value => handleImageObj(value)).join(',')
 
     const params = {
       name,

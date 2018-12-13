@@ -33,9 +33,9 @@ class BrandModel {
   @observable
   brandFormItems = [
     { label: '品牌商名称', field: 'name', type: 'input', subType: 'string', placeholder: '请输入品牌商名称', value: '', required: true, validateMessage: '请输入品牌商名称' },
-    { label: '品牌商LOGO', field: 'logoImage', type: 'upload', subType: 'single', preview: '', required: true, validateMessage: '请输入上传品牌商LOGO' },
+    { label: '品牌商LOGO', field: 'logoImage', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请输入上传品牌商LOGO' },
     { label: '是否植入广告', field: 'isImplantation', type: 'radio', src: ADVERTISING_OPTIONS, value: 1, required: true, validateMessage: '请选择是否植入广告' },
-    { label: '品牌商广告图', field: 'brandAdImage', type: 'upload', subType: 'single', preview: '', required: true, validateMessage: '请输入上传品牌商广告图' },
+    { label: '品牌商广告图', field: 'brandAdImage', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请输入上传品牌商广告图' },
     { label: '广告图链接地址', field: 'brandAdUrl', type: 'input', subType: 'string', placeholder: '请输入广告图链接地址', value: '', required: true, validateMessage: '请输入广告图链接地址' },
     { label: '达标阅读数', field: 'readNumber', type: 'input', subType: 'number', placeholder: '请输入达标阅读数', value: null, required: true, validateMessage: '请输入达标阅读数' },
     { label: '达标积分', field: 'standardIntegral', type: 'input', subType: 'number', placeholder: '请输入达标积分', value: null, required: true, validateMessage: '请输入达标积分' },
@@ -109,10 +109,10 @@ class BrandModel {
   }
 
   @action
-  setPreviewImg = (label, url) => {
+  setPreviewImg = (label, file) => {
     this.brandFormItems.map(value => {
       if (value.label === label) {
-        value.preview = url
+        value.preview.splice(0, 1, file)
       }
 
       return value
@@ -128,7 +128,12 @@ class BrandModel {
         } else if (brand.type === 'switch') {
           brand.value = !!item[brand.field]
         } else if (brand.type === 'upload') {
-          brand.preview = item[brand.field]
+          brand.preview = [{ 
+            id:     '-1', 
+            name:   `${ brand.field }.png`, 
+            status: 'done', 
+            url:    item[brand.field], 
+          }]
         }
       } else if (item.implantationStartTime && item.implantationEndTime) {
         if (brand.type === 'date' && brand.subType === 'range') {

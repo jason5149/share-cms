@@ -4,7 +4,8 @@ import { message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
-import { BASE_PATH } from '../../util/const'
+import { BASE_PATH } from '@util/const'
+import { handleImageObj } from '@util/tool'
 // import { BASE_PATH } from '@util/const'
 
 @inject(
@@ -27,18 +28,7 @@ class EditBrandPage extends Component {
   }
 
   init() {
-    // const { location } = this.props
-    // const { search } = location
-
-    /* eslint-disable-next-line */
-    // const params = new URLSearchParams(search)
-    // const mode = params.get('mode')
-
-    // this.setState({
-      // mode,
-    // }, () => {
     this.handleSearchBrandDetail()
-    // })
   }
 
   handleSearchBrandDetail = async() => {
@@ -70,8 +60,8 @@ class EditBrandPage extends Component {
       status,
       validDate,
     } = values
-    const logoImages = typeof logoImage === 'string' ? logoImage : logoImage.map(value => value.response.body)[0]
-    const brandAdImages = typeof brandAdImage === 'string' ? brandAdImage : brandAdImage.map(value => value.response.body)[0]
+    const logoImages = handleImageObj(logoImage[logoImage.length - 1])
+    const brandAdImages = handleImageObj(brandAdImage[brandAdImage.length - 1])
     const implantationStartTime = validDate[0].unix() * 1000
     const implantationEndTime = validDate[1].unix() * 1000
     const params = {
@@ -86,8 +76,6 @@ class EditBrandPage extends Component {
       implantationEndTime,
       status:         status ? 1 : 0,
     }
-
-    console.log(params)
 
     const result = await updateBrand({ id: match.params.id, ...params })
 

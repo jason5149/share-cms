@@ -3,6 +3,7 @@ export const API = '/share-cms'
 export const UPLOAD_FIELD = 'image'
 export const UPLOAD_URL = `${ API }/common/upload`
 export const MAX_UPLOAD_SIZE = 2 * 1024 * 1024
+export const CHANNEL_LINK = process.env.NODE_ENV === 'development' ? 'http://dev.tangjc.com/client/follow' : 'http://dev.tangjc.com/client/follow'
 
 export const ADVERTISING_OPTIONS = [
   { name: '是', value: 1 }, 

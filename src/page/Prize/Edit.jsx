@@ -5,6 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'PrizeModel',
@@ -28,16 +29,23 @@ class EditPrizePage extends Component {
     this.handleSearchPrizeDetail()
   }
 
-  handleSearchPrizeDetail = () => {
-    const { match } = this.props
+  handleSearchPrizeDetail = async() => {
+    const { PrizeModel, match } = this.props
     const { params } = match
+    const { queryPrizeDetail } = PrizeModel
 
-    console.log(params)
+    const result = await queryPrizeDetail(params)
+
+    if (result) {
+      this.setState({
+        status: true,
+      })
+    }
   } 
 
   handleSubmit = async (error, values) => {
-    const { PrizeModel } = this.props
-    const { createPrize } = PrizeModel
+    const { PrizeModel, match } = this.props
+    const { updatePrize } = PrizeModel
 
     if (error) return
 
@@ -58,9 +66,9 @@ class EditPrizePage extends Component {
       status,
     } = values
 
-    const coverImgStr = coverImg.map(value => value.response.body)[0]
-    const bannerImgStr = bannerImg.map(value => value.response.body).join(',')
-    const detailImgStr = detailImg.map(value => value.response.body).join(',')
+    const coverImgStr = handleImageObj(coverImg[coverImg.length - 1])
+    const bannerImgStr = bannerImg.map(value => handleImageObj(value)).join(',')
+    const detailImgStr = detailImg.map(value => handleImageObj(value)).join(',')
 
     const params = {
       name,
@@ -81,10 +89,10 @@ class EditPrizePage extends Component {
 
     console.log(params)
 
-    const result = await createPrize(params)
+    const result = await updatePrize({ id: match.params.id, ...params })
 
     if (result) {
-      message.success('添加成功')
+      message.success('编辑成功')
 
       setTimeout(() => {
         this.handleCancel()

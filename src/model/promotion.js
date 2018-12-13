@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 import React from 'react'
 import moment from 'moment'
 import { Badge, message } from 'antd'
-import { queryChannelList, createChannel, deleteChannel } from '@service/promotion'
+import { queryChannelList, queryChannelDetail, createChannel, updateChannel, deleteChannel } from '@service/promotion'
 
 class PromotionModel {
   @observable
@@ -29,6 +29,13 @@ class PromotionModel {
   @observable
   channelListPageNum = 1
 
+  @observable
+  channelFormItems = [
+    { label: '渠道名称', field: 'name', type: 'input', subType: 'string', placeholder: '请输入渠道名称', value: '', required: true, validateMessage: '请输入渠道名称' },
+    { label: '渠道参数', field: 'param', type: 'input', subType: 'string', placeholder: '请输入渠道参数', value: '', required: true, validateMessage: '请输入渠道参数' },
+    { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
+  ]
+
   @action
   queryChannelList = async params => {
     const result = await queryChannelList(params)
@@ -47,8 +54,32 @@ class PromotionModel {
   }
 
   @action
+  queryChannelDetail = async params => {
+    const result = await queryChannelDetail(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return this.fillChannelForm(result.body)
+  }
+
+  @action
   createChannel = async params => {
     const result = await createChannel(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
+  }
+
+  @action
+  updateChannel = async params => {
+    const result = await updateChannel(params)
 
     if (result.code !== '10000') {
       message.error(result.message)
@@ -66,6 +97,23 @@ class PromotionModel {
       message.error(result.message)
       return
     }
+
+    return true
+  }
+
+  @action
+  fillChannelForm = item => {
+    this.channelFormItems.map(channel => {
+      if (channel.field in item) {
+        if (channel.type === 'switch') {
+          channel.value = !!item[channel.field]
+        } else if (channel.type === 'input') {
+          channel.value = item[channel.field]
+        }
+      }
+
+      return channel
+    })
 
     return true
   }

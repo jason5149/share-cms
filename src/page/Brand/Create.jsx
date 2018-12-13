@@ -5,6 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'BrandModel',
@@ -34,8 +35,8 @@ class CreateBrandPage extends Component {
       status,
       validDate,
     } = values
-    const logoImages = logoImage.map(value => value.response.body)[0]
-    const brandAdImages = brandAdImage.map(value => value.response.body)[0]
+    const logoImages = handleImageObj(logoImage[logoImage.length - 1])
+    const brandAdImages = handleImageObj(brandAdImage[brandAdImage.length - 1])
     const implantationStartTime = validDate[0].unix() * 1000
     const implantationEndTime = validDate[1].unix() * 1000
     const params = {

@@ -26,6 +26,9 @@ class ChannelListPage extends Component {
         render:    (text, record) => {
           return (
             <div className='actions-btn-container'>
+              <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
+                编辑
+              </Button>
               <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
                 删除
               </Button>
@@ -60,12 +63,14 @@ class ChannelListPage extends Component {
     console.log(currentPage)
   }
 
-  handleActions = (type, info) => {
+  handleActions = (type, item) => {
     const { history, PromotionModel } = this.props
     const { deleteChannel } = PromotionModel
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/app/promotion/create-channel`)
+    } else if (type === 'edit') {
+      history.push(`${ BASE_PATH }/app/promotion/${ item.id }?mode=edit`)
     } else if (type === 'remove') {
       Confirm({
         title:      '删除渠道',
@@ -73,7 +78,7 @@ class ChannelListPage extends Component {
         okText:     '确认',
         cancelText: '取消',
         onOk:       async() => {
-          const { id } = info
+          const { id } = item
           const result = await deleteChannel({ id })
 
           if (result) {

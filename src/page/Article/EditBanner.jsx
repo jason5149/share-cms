@@ -5,7 +5,7 @@ import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
-import { base64decode } from '@util/tool'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'ArticleModel',
@@ -18,9 +18,8 @@ class EditBannerPage extends Component {
       { name: 'Banner列表', link: `${ BASE_PATH }/app/article/banner-list` },
       { name: '编辑Banner' },
     ],
-    mode:         'edit',
-    bannerDetail: null,
-    status:       false,
+    // mode:         'edit',
+    status: false,
   }
 
   componentDidMount() {
@@ -28,41 +27,20 @@ class EditBannerPage extends Component {
   }
 
   init() {
-    const { location } = this.props
-    const { search } = location
-
-    /* eslint-disable-next-line */
-    const params = new URLSearchParams(search)
-    const mode = params.get('mode')
-    const bannerDetail = params.get('params') ? base64decode(params.get('params')) : null
-
-    this.setState({
-      mode,
-      bannerDetail,
-    }, () => {
-      this.handleSearchBannerDetail()
-    })
+    this.handleSearchBannerDetail()
   }
 
-  handleSearchBannerDetail = () => {
-    // const { ArticleModel, match } = this.props
-    // const { queryBannerDetail } = ArticleModel
-    // const { params } = match
+  handleSearchBannerDetail = async() => {
+    const { ArticleModel, match } = this.props
+    const { queryBannerDetail } = ArticleModel
+    const { params } = match
 
-    // queryBannerDetail(params)
-    const { ArticleModel } = this.props
-    const { mode, bannerDetail } = this.state
-    const { fillBannerForm } = ArticleModel
+    const result = await queryBannerDetail(params)
 
-    if (mode === 'edit') {
-      console.log(bannerDetail)
-      const result = fillBannerForm(bannerDetail)
-
-      if (result) {
-        this.setState({
-          status: true,
-        })
-      }
+    if (result) {
+      this.setState({
+        status: true,
+      })
     }
   }
 
@@ -79,7 +57,7 @@ class EditBannerPage extends Component {
       validDate,
       status,
     } = values
-    const images = image.map(value => value.response.body)[0]
+    const images = handleImageObj(image[image.length - 1])
     const startTime = validDate[0].unix() * 1000
     const endTime = validDate[1].unix() * 1000
     const params = {

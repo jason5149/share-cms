@@ -34,7 +34,7 @@ class ArticleModel {
     { label: '类型', field: 'type', type: 'radio', src: BANNER_TYPE_OPTIONS, value: 1, required: true, validateMessage: '请选择Banner类型' },
     { label: '排序', field: 'sort', type: 'input', subType: 'number', placeholder: '请设置奖品排序', value: null, required: true, validateMessage: '请设置奖品排序' },
     { label: '有效时间', field: 'validDate', type: 'date', subType: 'range', value: [], required: true, validateMessage: '请选择有效时间' },
-    { label: '图片', field: 'image', type: 'upload', subType: 'single', preview: '', required: true, validateMessage: '请上传Banner图' },
+    { label: '图片', field: 'image', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请上传Banner图' },
     { label: '链接地址', field: 'url', type: 'input', subType: 'string', placeholder: '请输入图片跳转链接', value: '' },
     { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
   ]
@@ -65,7 +65,7 @@ class ArticleModel {
       return
     }
 
-    console.log(result.body)
+    return this.fillBannerForm(result.body)
   }
 
   @action
@@ -105,10 +105,10 @@ class ArticleModel {
   }
 
   @action
-  setPreviewImg = (label, url) => {
+  setPreviewImg = (label, file) => {
     this.bannerFormItems.map(value => {
       if (value.label === label) {
-        value.preview = url
+        value.preview.splice(0, 1, file)
       }
 
       return value
@@ -124,7 +124,12 @@ class ArticleModel {
         } else if (banner.type === 'switch') {
           banner.value = !!item[banner.field]
         } else if (banner.type === 'upload') {
-          banner.preview = item[banner.field]
+          banner.preview = [{ 
+            id:     '-1', 
+            name:   `${ banner.field }.png`, 
+            status: 'done', 
+            url:    item[banner.field], 
+          }]
         }
       } else if (item.startTime && item.endTime) {
         if (banner.type === 'date' && banner.subType === 'range') {
