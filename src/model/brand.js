@@ -15,7 +15,12 @@ class BrandModel {
   @observable
   brandListColumn = [
     { title: '品牌商名称', dataIndex: 'name', key: 'name' },
-    { title: '是否植入广告', dataIndex: 'isImplantation', key: 'isImplantation' },
+    { 
+      title:     '是否植入广告', 
+      dataIndex: 'isImplantation', 
+      key:       'isImplantation', 
+      render:    text => text === 1 ? '是' : '否', 
+    },
     { title: '目标阅读数', dataIndex: 'readNumber', key: 'readNumber' },
     {  
       title:     '状态', 
