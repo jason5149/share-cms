@@ -34,7 +34,7 @@ class MemberDetalPage extends Component {
   }
 
   render() {
-    const { MemberModel } = this.props
+    // const { MemberModel } = this.props
     const { breadcrumbItems } = this.state
 
     return (

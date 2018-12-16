@@ -7,7 +7,8 @@ import AsyncComponent from '@component/AsyncComponent'
 import GlobalHeader from '@component/GlobalHeader'
 import MenuList from '@component/MenuList'
 
-const { Header, Content, Footer, Sider } = Layout
+// const { Header, Content, Footer, Sider } = Layout
+const { Header, Content, Sider } = Layout
 
 @inject(
   'GlobalModel',
