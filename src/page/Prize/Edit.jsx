@@ -21,12 +21,24 @@ class EditPrizePage extends Component {
     status: false,
   }
 
+  form = null
+
   componentDidMount() {
     this.init()
   }
 
+  componentWillUnmount() {
+    this.destroy()
+  }
+
   init() {
+    this.handleResetPrizeForm()
     this.handleSearchPrizeDetail()
+  }
+
+  destroy() {
+    this.form.resetFields()
+    this.handleResetPrizeForm()
   }
 
   handleSearchPrizeDetail = async() => {
@@ -42,6 +54,13 @@ class EditPrizePage extends Component {
       })
     }
   } 
+
+  handleResetPrizeForm = () => {
+    const { PrizeModel } = this.props
+    const { resetPrizeForm } = PrizeModel
+
+    resetPrizeForm()
+  }
 
   handleSubmit = async (error, values) => {
     const { PrizeModel, match } = this.props
@@ -117,6 +136,7 @@ class EditPrizePage extends Component {
         <PageContent>
           {status && (
             <PageForm 
+              ref={ el => this.form = el }
               data={ prizeFormItems } 
               onPreviewUpload={ setPreviewImg }
               onMultiplePreviewUpload={ setMultiplePreviewImg }

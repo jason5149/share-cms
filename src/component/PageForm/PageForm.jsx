@@ -23,16 +23,14 @@ class PageForm extends Component {
     previewVisible: false,
   }
 
-  componentDidUpdate() {
-    this.update()
-  }
+  handleEmptyForm = () => {
+    const { form } = this.props
+    const { resetFields } = form
 
-  update() {
-    console.log(this.props)
+    resetFields()
   }
 
   handleNormFile = e => {
-    console.log(e)
     if (!e || !e.fileList) {
       return e
     }
@@ -43,7 +41,6 @@ class PageForm extends Component {
   }
 
   handleBeforeUpload = file => {
-    console.log(file)
     const { uploading } = this.state
     const { name, size } = file
 
@@ -63,7 +60,7 @@ class PageForm extends Component {
     return true
   }
 
-  handleUploadChange = ({ file }, label) => {
+  handleUploadChange = (label, { file }) => {
     const { onPreviewUpload } = this.props
 
     if (file.status === 'uploading') {
@@ -97,13 +94,13 @@ class PageForm extends Component {
     })
   }
 
-  handleMultipleRemove = (file, label) => {
+  handleMultipleRemove = (label, file) => {
     const { onMultiplePreviewRemove } = this.props
 
-    onMultiplePreviewRemove(label, file.response.body)
+    onMultiplePreviewRemove(label, file.url || file.response.body)
   }
 
-  handleMultipleUploadChange = ({ file, fileList }, label) => {
+  handleMultipleUploadChange = (label, { file, fileList }) => {
     const { onMultiplePreviewUpload } = this.props
     
     if (file.status === 'uploading') {
@@ -197,14 +194,10 @@ class PageForm extends Component {
         options.valuePropName = 'value'
       }
     } else if (type === 'upload') {
-      if (preview) {
-        options.initialValue = preview
-      }
+      options.initialValue = preview
       options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
     }
-
-    console.log(options)
 
     if (type === 'input') {
       if (subType === 'string') {
@@ -240,7 +233,7 @@ class PageForm extends Component {
                   listType='picture-card'
                   showUploadList={ false }
                   beforeUpload={ this.handleBeforeUpload }
-                  onChange={ info => this.handleUploadChange(info, label) }
+                  onChange={ info => this.handleUploadChange(label, info) }
                 >
                   {this.renderImage(preview)}
                 </Upload> 
@@ -259,13 +252,13 @@ class PageForm extends Component {
                   listType='picture-card'
                   // fileList={ preview }
                   beforeUpload={ this.handleBeforeUpload }
-                  onChange={ info => this.handleMultipleUploadChange(info, label) }
+                  onChange={ info => this.handleMultipleUploadChange(label, info) }
                   onPreview={ this.handleMultiplePreview }
                   onRemove={ file => this.handleMultipleRemove(label, file) }
                 >
-                  {preview.length >= limit ? null : '上传图片'}
+                  {preview && preview.length >= limit ? null : '上传图片'}
                 </Upload> 
-            )}
+              )}
             </FormItem>
           </Col>
         )

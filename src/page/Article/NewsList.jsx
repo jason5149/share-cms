@@ -9,35 +9,35 @@ import { BASE_PATH } from '@util/const'
 const { confirm: Confirm } = Modal
 
 @inject(
-  'BrandModel',
+  'ArticleModel',
 )
 @observer
-class ArticleListPage extends Component {
+class NewsListPage extends Component {
   state = {
     breadcrumbItems: [
       { name: '热文库管理' },
       { name: '热文库列表' },
     ],
-    actionsListColumn: [
-      { 
-        title:     '操作', 
-        dataIndex: 'actions', 
-        key:       'actions', 
-        render:    (text, record) => {
-          return (
-            <div className='actions-btn-container'>
-              {/* <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
-                <Icon type='edit' />
-                编辑
-              </Button> */}
-              <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
-                删除
-              </Button>
-            </div>
-          )
-        },
-      },
-    ],
+    // actionsListColumn: [
+    //   { 
+    //     title:     '操作', 
+    //     dataIndex: 'actions', 
+    //     key:       'actions', 
+    //     render:    (text, record) => {
+    //       return (
+    //         <div className='actions-btn-container'>
+    //           {/* <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
+    //             <Icon type='edit' />
+    //             编辑
+    //           </Button> */}
+    //           <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
+    //             删除
+    //           </Button>
+    //         </div>
+    //       )
+    //     },
+    //   },
+    // ],
   }
 
   componentDidMount() {
@@ -45,28 +45,28 @@ class ArticleListPage extends Component {
   }
 
   init() {
-    this.handleSearchBrandList()
+    this.handleSearchNewsList()
   }
 
-  handleSearchBrandList = (currentPage = 1) => {
-    const { BrandModel } = this.props
-    const { queryBrandList } = BrandModel
+  handleSearchNewsList = (currentPage = 1) => {
+    const { ArticleModel } = this.props
+    const { queryNewsList } = ArticleModel
 
     const params = {
       currentPage,
       pageSize: 10,
     }
 
-    queryBrandList(params)
+    queryNewsList(params)
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchNewsList(currentPage)
   }
 
   handleActions = (type, info) => {
-    const { history, BrandModel } = this.props
-    const { deleteBrand } = BrandModel
+    const { history, ArticleModel } = this.props
+    const { deleteBrand } = ArticleModel
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/app/brand/create`)
@@ -94,35 +94,37 @@ class ArticleListPage extends Component {
   }
 
   render() {
-    const { BrandModel } = this.props
-    const { breadcrumbItems, actionsListColumn } = this.state
+    const { ArticleModel } = this.props
+    // const { breadcrumbItems, actionsListColumn } = this.state
+    const { breadcrumbItems } = this.state
     const { 
-      brandList, 
-      brandListTotal, 
-      brandListColumn,
-      brandListPageNum, 
-    } = BrandModel
+      newsList, 
+      newsListTotal, 
+      newsListColumn,
+      newsListPageNum, 
+    } = ArticleModel
 
     return (
       <div className='view-container'>
         <PageHeader title='热文库列表' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
-          {/* <div style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 24 }}>
             <Button type='primary' onClick={ () => this.handleActions('create') }>新增品牌商</Button>
           </div>
           <PageTable 
             rowKey='id'
-            total={ brandListTotal }
-            columns={ brandListColumn.concat(actionsListColumn) }
-            pageNum={ brandListPageNum }
+            total={ newsListTotal }
+            // columns={ newsListColumn.concat(actionsListColumn) }
+            columns={ newsListColumn }
+            pageNum={ newsListPageNum }
             pageSize={ 10 }
-            dataSource={ brandList }
+            dataSource={ newsList }
             onPageChange={ this.handlePageChange }
-          /> */}
+          />
         </PageContent>
       </div>
     )
   }
 }
 
-export default ArticleListPage
+export default NewsListPage

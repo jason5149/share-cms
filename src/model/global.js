@@ -32,12 +32,12 @@ class GlobalModel {
     //   ],
     // },
     {
-      key:   '/app/members',
+      key:   '/app/member',
       icon:  'team',
       title: '会员管理',
       child: [
         {
-          key:   '/app/members/list',
+          key:   '/app/member/list',
           title: '会员列表',
         },
       ],
@@ -111,7 +111,7 @@ class GlobalModel {
       title: '热文库管理',
       child: [
         {
-          key:   '/app/article/list',
+          key:   '/app/article/news-list',
           title: '热文库列表',
         },
         {
@@ -142,6 +142,9 @@ class GlobalModel {
  
   @action
   handleToggleMenu = () => this.collapsed = !this.collapsed
+
+  @action
+  handleResetForm = callback => callback && callback()
 }
 
 export default new GlobalModel()

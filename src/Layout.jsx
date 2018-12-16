@@ -46,6 +46,10 @@ class BasicLayout extends Component {
           <Content className='content-container'>
             <Switch>
               <Route path={ `${ url }/home` } component={ AsyncComponent(() => import('@page/Home')) } />
+              {/* 会员管理 */}
+              <Route path={ `${ url }/member/list` } component={ AsyncComponent(() => import('@page/Member/List')) } />
+              <Route path={ `${ url }/member/:id` } component={ AsyncComponent(() => import('@page/Member/Detail')) } />
+              {/* 会员管理 */}
               {/* 品牌商管理 */}
               <Route path={ `${ url }/brand/list` } component={ AsyncComponent(() => import('@page/Brand/List')) } />
               <Route path={ `${ url }/brand/create` } component={ AsyncComponent(() => import('@page/Brand/Create')) } />
@@ -56,8 +60,13 @@ class BasicLayout extends Component {
               <Route path={ `${ url }/prize/create` } component={ AsyncComponent(() => import('@page/Prize/Create')) } />
               <Route path={ `${ url }/prize/:id` } component={ AsyncComponent(() => import('@page/Prize/Edit')) } />
               {/* 奖品管理 */}
+              {/* 任务管理 */}
+              <Route path={ `${ url }/mission/basic-list` } component={ AsyncComponent(() => import('@page/Mission/List')) } />
+              <Route path={ `${ url }/mission/exchange-list` } component={ AsyncComponent(() => import('@page/Mission/ExchangeList')) } />
+              {/* 任务管理 */}
               {/* 热文库管理 */}
               {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}
+              <Route path={ `${ url }/article/news-list` } component={ AsyncComponent(() => import('@page/Article/NewsList')) } />
               <Route path={ `${ url }/article/banner-list` } component={ AsyncComponent(() => import('@page/Article/BannerList')) } />
               <Route path={ `${ url }/article/create-banner` } component={ AsyncComponent(() => import('@page/Article/CreateBanner')) } />
               <Route path={ `${ url }/article/:id` } component={ AsyncComponent(() => import('@page/Article/EditBanner')) } />
@@ -69,9 +78,9 @@ class BasicLayout extends Component {
               {/* 推广中心 */}
             </Switch>
           </Content>
-          <Footer className='footer-container'>
+          {/* <Footer className='footer-container'>
             Ant Design ©2018 Created by Ant UED
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
     )

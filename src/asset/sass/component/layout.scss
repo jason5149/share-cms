@@ -29,7 +29,8 @@
 }
 
 .content-container {
-  @include position(absolute, 64px, 0, 62px, 0);
+  // @include position(absolute, 64px, 0, 62px, 0);
+  @include position(absolute, 64px, 0, 0, 0);
 }
 
 .footer-container {

@@ -1,10 +1,9 @@
-import { observable, action } from 'mobx'
 import React from 'react'
 import moment from 'moment'
+import { observable, action } from 'mobx'
 import { Badge, message } from 'antd'
 import { queryBrandList, queryBrandDetail, createBrand, updateBrand, deleteBrand } from '@service/brand'
 import { ADVERTISING_OPTIONS } from '@util/const'
-
 
 class BrandModel {
   @observable
@@ -129,7 +128,7 @@ class BrandModel {
           brand.value = !!item[brand.field]
         } else if (brand.type === 'upload') {
           brand.preview = [{ 
-            id:     '-1', 
+            uid:    '-1', 
             name:   `${ brand.field }.png`, 
             status: 'done', 
             url:    item[brand.field], 

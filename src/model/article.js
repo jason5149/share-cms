@@ -2,10 +2,39 @@ import { observable, action } from 'mobx'
 import React from 'react'
 import moment from 'moment'
 import { Badge, message } from 'antd'
-import { queryBannerList, queryBannerDetail, createBanner, updateBanner, deleteBanner } from '@service/article'
+import { 
+  queryNewsList, 
+  queryBannerList, 
+  queryBannerDetail, 
+  createBanner, 
+  updateBanner, 
+  deleteBanner,
+} from '@service/article'
 import { BANNER_TYPE_OPTIONS, BANNER_TYPE_DESC } from '@util/const'
 
 class ArticleModel {
+  @observable
+  newsList = []
+
+  @observable
+  newsListTotal = 0
+
+  @observable
+  newsListColumn = [
+    { title: '标题', dataIndex: 'title', key: 'title' },
+    // { title: '类型', dataIndex: 'type', key: 'type', render: text => <span>{NEWS_TYPE_DESC[text]}</span> },
+    { title: '类型', dataIndex: 'category', key: 'category' },
+    { title: '来源', dataIndex: 'author_name', key: 'author_name' },
+    { title: '总阅读数', dataIndex: 'readCount', key: 'readCount' },
+    // { title: '任务数', dataIndex: 'readCount', key: 'readCount' },
+    // { title: '进行中', dataIndex: 'readCount', key: 'readCount' },
+    // { title: '已完成', dataIndex: 'readCount', key: 'readCount' },
+    { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
+  ]
+
+  @observable
+  newsListPageNum = 1
+  
   @observable
   bannerList = [] 
 
@@ -38,6 +67,23 @@ class ArticleModel {
     { label: '链接地址', field: 'url', type: 'input', subType: 'string', placeholder: '请输入图片跳转链接', value: '' },
     { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
   ]
+
+  @action
+  queryNewsList = async params => {
+    const result = await queryNewsList(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    this.newsListPageNum = params.currentPage
+
+    if (result.body) {
+      this.newsList = result.body.list
+      this.newsListTotal = result.body.page.totalNum
+    }
+  }
 
   @action
   queryBannerList = async params => {
@@ -125,7 +171,7 @@ class ArticleModel {
           banner.value = !!item[banner.field]
         } else if (banner.type === 'upload') {
           banner.preview = [{ 
-            id:     '-1', 
+            uid:    '-1', 
             name:   `${ banner.field }.png`, 
             status: 'done', 
             url:    item[banner.field], 
