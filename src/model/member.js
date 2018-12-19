@@ -18,8 +18,8 @@ class MemberModel {
     { title: '手机号', dataIndex: 'mobile', key: 'mobile' },
     { title: '位置', dataIndex: 'address', key: 'address' },
     // { title: '任务数', dataIndex: 'mission', key: 'mission' },
-    // { title: '进行中', dataIndex: 'mission', key: 'mission' },
-    // { title: '已完成', dataIndex: 'mission', key: 'mission' },
+    { title: '进行中', dataIndex: 'doingJobCount', key: 'doingJobCount' },
+    { title: '已完成', dataIndex: 'finishedJobCount', key: 'finishedJobCount' },
     { title: '总阅读', dataIndex: 'shareReadCount', key: 'shareReadCount' },
     { title: '总转载', dataIndex: 'shareCount', key: 'shareCount' },
     // { title: '赠送阅读数', dataIndex: 'mission', key: 'mission' },
@@ -31,6 +31,9 @@ class MemberModel {
 
   @observable
   memberListPageNum = 1
+
+  @observable
+  memberDetail = null
 
   @action
   queryMemberList = async params => {
@@ -62,7 +65,7 @@ class MemberModel {
       return
     }
 
-    console.log(result.body)
+    this.memberDetail = result.body
   }
 }
 

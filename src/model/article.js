@@ -27,13 +27,24 @@ class ArticleModel {
     { title: '来源', dataIndex: 'author_name', key: 'author_name' },
     { title: '总阅读数', dataIndex: 'readCount', key: 'readCount' },
     // { title: '任务数', dataIndex: 'readCount', key: 'readCount' },
-    // { title: '进行中', dataIndex: 'readCount', key: 'readCount' },
-    // { title: '已完成', dataIndex: 'readCount', key: 'readCount' },
+    { title: '进行中', dataIndex: 'doingJobCount', key: 'doingJobCount' },
+    { title: '已完成', dataIndex: 'finishedJobCount', key: 'finishedJobCount' },
     { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
   ]
 
   @observable
   newsListPageNum = 1
+
+  @observable
+  newsTemplateFormItems = [
+    { label: '平台广告语', field: 'platAd', type: 'input', subType: 'string', placeholder: '请输入平台广告语', value: '' },
+    { label: '引导广告语', field: 'guideAd', type: 'input', subType: 'string', placeholder: '请输入引导广告语', value: '' },
+    { label: '分享广告语', field: 'shareAd', type: 'input', subType: 'string', placeholder: '请输入分享广告语', value: '' },
+    { label: '业务流程图', field: 'businessFlow', type: 'upload', subType: 'single', preview: [], validateMessage: '请上传业务流程图' },
+    { label: '按钮名称', field: 'buttonName', type: 'input', subType: 'string', placeholder: '请输入按钮名称', value: '' },
+    { label: '免责申明', field: 'exemption', type: 'input', subType: 'string', placeholder: '请输入免责申明', value: '' },
+    { label: '二维码引导语', field: 'qrCodeGuide', type: 'input', subType: 'string', placeholder: '请输入二维码引导语', value: '' },
+  ]
   
   @observable
   bannerList = [] 
@@ -153,6 +164,17 @@ class ArticleModel {
   @action
   setPreviewImg = (label, file) => {
     this.bannerFormItems.map(value => {
+      if (value.label === label) {
+        value.preview.splice(0, 1, file)
+      }
+
+      return value
+    })
+  }
+
+  @action
+  setTemplatePreviewImg = (label, file) => {
+    this.newsTemplateFormItems.map(value => {
       if (value.label === label) {
         value.preview.splice(0, 1, file)
       }

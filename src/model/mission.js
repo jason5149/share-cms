@@ -16,8 +16,8 @@ class MissionModel {
     { title: '任务流水号', dataIndex: 'jobNo', key: 'jobNo' },
     { title: '任务标题', dataIndex: 'newsTitle', key: 'newsTitle' },
     { title: '任务人', dataIndex: 'userName', key: 'userName' },
-    { title: '达标阅读数', dataIndex: 'num', key: 'num' },
-    { title: '赠送阅读数', dataIndex: 'num', key: 'num' },
+    // { title: '达标阅读数', dataIndex: 'num', key: 'num' },
+    // { title: '赠送阅读数', dataIndex: 'num', key: 'num' },
     { title: '阅读数', dataIndex: 'readCount', key: 'readCount' },
     { title: '转载数', dataIndex: 'reprintCount', key: 'reprintCount' },
     { title: '分享次数', dataIndex: 'shareCount', key: 'shareCount' },
@@ -49,7 +49,7 @@ class MissionModel {
     { title: '兑奖积分', dataIndex: 'reprintCount', key: 'reprintCount' },
     { title: '使用积分', dataIndex: 'shareCount', key: 'shareCount' },
     { title: '发货类型', dataIndex: 'shipmentType', key: 'shipmentType' },
-    { title: '收件人', dataIndex: 'shareCount', key: 'shareCount' },
+    // { title: '收件人', dataIndex: 'shareCount', key: 'shareCount' },
     { title: '快递公司', dataIndex: 'expressCompany', key: 'expressCompany' },
     { title: '快递单号', dataIndex: 'expressNo', key: 'expressNo' },
     {  
@@ -96,6 +96,15 @@ class MissionModel {
     if (result.body) {
       this.exchangeList = result.body.list
       this.exchangeListTotal = result.body.page.totalNum
+    }
+  }
+
+  @action
+  resetPageNum = type => {
+    if (type === 'mission') {
+      this.missionListPageNum = 1
+    } else {
+      this.exchangeListPageNum = 1
     }
   }
 }

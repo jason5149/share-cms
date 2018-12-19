@@ -68,6 +68,7 @@ class BasicLayout extends Component {
               {/* 热文库管理 */}
               {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}
               <Route path={ `${ url }/article/news-list` } component={ AsyncComponent(() => import('@page/Article/NewsList')) } />
+              <Route path={ `${ url }/article/news-template` } component={ AsyncComponent(() => import('@page/Article/NewsTemplate')) } />
               <Route path={ `${ url }/article/banner-list` } component={ AsyncComponent(() => import('@page/Article/BannerList')) } />
               <Route path={ `${ url }/article/create-banner` } component={ AsyncComponent(() => import('@page/Article/CreateBanner')) } />
               <Route path={ `${ url }/article/:id` } component={ AsyncComponent(() => import('@page/Article/EditBanner')) } />

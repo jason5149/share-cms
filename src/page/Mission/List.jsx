@@ -60,7 +60,7 @@ class MissionListPage extends Component {
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchMissionList(currentPage)
   }
 
   // handleActions = (type, item) => {

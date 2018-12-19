@@ -60,7 +60,7 @@ class ExchangeListPage extends Component {
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchExchangeList(currentPage)
   }
 
   // handleActions = (type, item) => {

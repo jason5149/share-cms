@@ -1,0 +1,11 @@
+.label {
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 12px;
+  @include size(180px);
+}
+
+.desc {
+  color: #666;
+  font-size: 14px;
+}

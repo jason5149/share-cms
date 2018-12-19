@@ -68,8 +68,8 @@ class NewsListPage extends Component {
     const { history, ArticleModel } = this.props
     const { deleteBrand } = ArticleModel
 
-    if (type === 'create') {
-      history.push(`${ BASE_PATH }/app/brand/create`)
+    if (type === 'template') {
+      history.push(`${ BASE_PATH }/app/article/news-template`)
     } else if (type === 'remove') {
       Confirm({
         title:      '删除品牌商',
@@ -109,7 +109,7 @@ class NewsListPage extends Component {
         <PageHeader title='热文库列表' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
           <div style={{ marginBottom: 24 }}>
-            <Button type='primary' onClick={ () => this.handleActions('create') }>新增品牌商</Button>
+            <Button type='primary' onClick={ () => this.handleActions('template') }>编辑热文模板</Button>
           </div>
           <PageTable 
             rowKey='id'
