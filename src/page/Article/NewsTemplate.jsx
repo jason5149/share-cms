@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-// import { message } from 'antd'
+import { message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageForm from '@component/PageForm'
 import { BASE_PATH } from '@util/const'
-// import { handleImageObj } from '@util/tool'
+import { handleImageObj } from '@util/tool'
 
 @inject(
   'ArticleModel',
@@ -27,7 +27,7 @@ class NewsTemplatePage extends Component {
   }
 
   init() {
-    // this.handleSearchNewsTemplate()
+    this.handleSearchNewsTemplate()
   }
 
   handleSearchNewsTemplate = async() => {
@@ -46,17 +46,51 @@ class NewsTemplatePage extends Component {
 
   handleSubmit = async (error, values) => {
     if (error) return
+    const { ArticleModel } = this.props
+    const { updateNewsTemplate } = ArticleModel
+    const {
+      platAd,
+      guideAd,
+      shareAd,
+      businessFlow,
+      buttonName,
+      exemption,
+      qrCodeGuide,
+    } = values
+    const businessFlows = handleImageObj(businessFlow[businessFlow.length - 1])
+    const params = {}
 
-    console.log(values)
-    // const { ArticleModel, match } = this.props
+    if (platAd) {
+      params.platAd = platAd
+    }
+    if (guideAd) {
+      params.guideAd = guideAd
+    }
+    if (shareAd) {
+      params.shareAd = shareAd
+    }
+    if (businessFlow) {
+      params.businessFlow = businessFlows
+    }
+    if (buttonName) {
+      params.buttonName = buttonName
+    }
+    if (exemption) {
+      params.exemption = exemption
+    }
+    if (qrCodeGuide) {
+      params.qrCodeGuide = qrCodeGuide
+    }
 
-    // if (result) {
-    //   message.success('编辑成功')
+    const result = await updateNewsTemplate(params)
 
-    //   setTimeout(() => {
-    //     this.handleCancel()
-    //   }, 500)
-    // }
+    if (result) {
+      message.success('编辑成功')
+
+      setTimeout(() => {
+        this.handleCancel()
+      }, 500)
+    }
   }
 
   handleCancel = () => {
