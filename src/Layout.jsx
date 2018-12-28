@@ -74,6 +74,7 @@ class BasicLayout extends Component {
               <Route path={ `${ url }/article/:id` } component={ AsyncComponent(() => import('@page/Article/EditBanner')) } />
               {/* 热文库管理 */}
               {/* 推广中心 */}
+              <Route path={ `${ url }/promotion/config` } component={ AsyncComponent(() => import('@page/Promotion/Config')) } />
               <Route path={ `${ url }/promotion/channel-list` } component={ AsyncComponent(() => import('@page/Promotion/ChannelList')) } />
               <Route path={ `${ url }/promotion/create-channel` } component={ AsyncComponent(() => import('@page/Promotion/CreateChannel')) } />
               <Route path={ `${ url }/promotion/:id` } component={ AsyncComponent(() => import('@page/Promotion/EditChannel')) } />

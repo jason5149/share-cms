@@ -20,6 +20,21 @@ class CreateBrandPage extends Component {
     ],
   }
 
+  componentDidMount() {
+    this.init()
+  }
+
+  init() {
+    this.handleInitForm()
+  }
+
+  handleInitForm = () => {
+    const { BrandModel } = this.props
+    const { emptyBrandForm } = BrandModel
+
+    emptyBrandForm()
+  }
+
   handleSubmit = async (error, values) => {
     if (error) return
     const { BrandModel } = this.props

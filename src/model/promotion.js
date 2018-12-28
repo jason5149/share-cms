@@ -2,9 +2,22 @@ import { observable, action } from 'mobx'
 import React from 'react'
 import moment from 'moment'
 import { Badge, message } from 'antd'
-import { queryChannelList, queryChannelDetail, createChannel, updateChannel, deleteChannel } from '@service/promotion'
+import { 
+  queryConfig,
+  updateConfig,
+  queryChannelList, 
+  queryChannelDetail, 
+  createChannel, 
+  updateChannel, 
+  deleteChannel,
+} from '@service/promotion'
 
 class PromotionModel {
+  @observable
+  configFormItems = [
+    { label: '新用户赠送阅读数', field: 'readCount', type: 'input', subType: 'number', placeholder: '请输入赠送阅读数', value: null, required: true, validateMessage: '请输入赠送阅读数' },
+  ]
+
   @observable
   channelList = []
 
@@ -35,6 +48,29 @@ class PromotionModel {
     { label: '渠道参数', field: 'param', type: 'input', subType: 'string', placeholder: '请输入渠道参数', value: '', required: true, validateMessage: '请输入渠道参数' },
     { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
   ]
+
+  queryConfig = async () => {
+    const result = await queryConfig()
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    this.config = result.body
+  }
+
+  @action
+  updateConfig = async params => {
+    const result = await updateConfig(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
+  }
 
   @action
   queryChannelList = async params => {

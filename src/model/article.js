@@ -12,7 +12,7 @@ import {
   updateBanner, 
   deleteBanner,
 } from '@service/article'
-import { BANNER_TYPE_OPTIONS, BANNER_TYPE_DESC } from '@util/const'
+import { ADVERTISING_INSERT_OPTIONS, BANNER_TYPE_OPTIONS, BANNER_TYPE_DESC } from '@util/const'
 
 class ArticleModel {
   @observable
@@ -44,6 +44,7 @@ class ArticleModel {
     { label: '分享广告语', field: 'shareAd', type: 'input', subType: 'string', placeholder: '请输入分享广告语', value: '', required: true, validateMessage: '请输入分享广告语' },
     { label: '业务流程图', field: 'businessFlow', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请上传业务流程图' },
     { label: '按钮名称', field: 'buttonName', type: 'input', subType: 'string', placeholder: '请输入按钮名称', value: '', required: true, validateMessage: '请输入按钮名称' },
+    { label: '广告插入顺序', field: 'adSort', type: 'radio', src: ADVERTISING_INSERT_OPTIONS, value: null, required: true, validateMessage: '请选择广告插入顺序' },
     { label: '免责申明', field: 'exemption', type: 'input', subType: 'string', placeholder: '请输入免责申明', value: '', required: true, validateMessage: '请输入免责申明' },
     { label: '二维码引导语', field: 'qrCodeGuide', type: 'input', subType: 'string', placeholder: '请输入二维码引导语', value: '', required: true, validateMessage: '请输入二维码引导语' },
   ]
@@ -71,6 +72,7 @@ class ArticleModel {
   @observable
   bannerListPageNum = 1
 
+  @observable
   bannerFormItems = [
     { label: '标题', field: 'title', type: 'input', subType: 'string', placeholder: '请输入Banner标题', value: '', required: true, validateMessage: '请输入Banner标题' },
     { label: '类型', field: 'type', type: 'radio', src: BANNER_TYPE_OPTIONS, value: 1, required: true, validateMessage: '请选择Banner类型' },
@@ -188,6 +190,19 @@ class ArticleModel {
   }
 
   @action
+  emptyBannerForm = () => {
+    this.bannerFormItems = [
+      { label: '标题', field: 'title', type: 'input', subType: 'string', placeholder: '请输入Banner标题', value: '', required: true, validateMessage: '请输入Banner标题' },
+      { label: '类型', field: 'type', type: 'radio', src: BANNER_TYPE_OPTIONS, value: 1, required: true, validateMessage: '请选择Banner类型' },
+      { label: '排序', field: 'sort', type: 'input', subType: 'number', placeholder: '请设置奖品排序', value: null, required: true, validateMessage: '请设置奖品排序' },
+      { label: '有效时间', field: 'validDate', type: 'date', subType: 'range', value: [], required: true, validateMessage: '请选择有效时间' },
+      { label: '图片', field: 'image', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请上传Banner图' },
+      { label: '链接地址', field: 'url', type: 'input', subType: 'string', placeholder: '请输入图片跳转链接', value: '' },
+      { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
+    ]
+  }
+
+  @action
   setPreviewImg = (label, file) => {
     this.bannerFormItems.map(value => {
       if (value.label === label) {
@@ -213,7 +228,7 @@ class ArticleModel {
   fillNewsTemplateForm = item => {
     this.newsTemplateFormItems.map(template => {
       if (template.field in item) {
-        if (['input'].indexOf(template.type) !== -1) {
+        if (['input', 'radio'].indexOf(template.type) !== -1) {
           template.value = item[template.field]
         } else if (template.type === 'upload') {
           template.preview = [{ 

@@ -30,9 +30,9 @@ class BannerListPage extends Component {
               <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
                 编辑
               </Button>
-              {/* <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
+              <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
                 删除
-              </Button> */}
+              </Button>
             </div>
           )
         },
@@ -61,7 +61,7 @@ class BannerListPage extends Component {
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchBannerList(currentPage)
   }
 
   handleActions = (type, item) => {
@@ -75,7 +75,7 @@ class BannerListPage extends Component {
     } else if (type === 'remove') {
       Confirm({
         title:      '删除Banner',
-        content:    '您确认要该删除Banner吗？',
+        content:    '您确认要删除该Banner吗？',
         okText:     '确认',
         cancelText: '取消',
         onOk:       async() => {

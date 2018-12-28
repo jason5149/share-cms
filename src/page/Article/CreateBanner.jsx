@@ -20,6 +20,21 @@ class CreateBannerPage extends Component {
     ],
   }
 
+  componentDidMount() {
+    this.init()
+  }
+
+  init() {
+    this.handleInitForm()
+  }
+
+  handleInitForm = () => {
+    const { ArticleModel } = this.props
+    const { emptyBannerForm } = ArticleModel
+
+    emptyBannerForm()
+  }
+
   handleSubmit = async (error, values) => {
     if (error) return
     const { ArticleModel } = this.props

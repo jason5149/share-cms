@@ -54,6 +54,7 @@ class NewsTemplatePage extends Component {
       shareAd,
       businessFlow,
       buttonName,
+      adSort,
       exemption,
       qrCodeGuide,
     } = values
@@ -74,6 +75,9 @@ class NewsTemplatePage extends Component {
     }
     if (buttonName) {
       params.buttonName = buttonName
+    }
+    if (adSort) {
+      params.adSort = adSort
     }
     if (exemption) {
       params.exemption = exemption

@@ -27,6 +27,15 @@ export const PRIZE_TYPE_DESC = {
   3: '卡券类',
 }
 
+export const ADVERTISING_INSERT_OPTIONS = [
+  { name: '第一张图后面，若整篇新闻无图片，插入新闻最后', value: 1 },
+  { name: '第二张图后面，若无第二张图片，默认插入第一张后面，若整篇新闻无图片，插入新闻最后', value: 2 },
+  { name: '第三张图后面，若无第三张图片，默认插入第二张后面，若整篇新闻无图片，插入新闻最后', value: 3 },
+  { name: '第四张图后面，若无第四张图片，默认插入第三张后面，若整篇新闻无图片，插入新闻最后', value: 4 },
+  { name: '第五张图后面，若无第五张图片，默认插入第四张后面，若整篇新闻无图片，插入新闻最后', value: 5 },
+  { name: '插入新闻最后', value: 99 },
+]
+
 export const BANNER_TYPE_OPTIONS = [
   { name: '外部', value: 1 },
   { name: '内部', value: 2 },

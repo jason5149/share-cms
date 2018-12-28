@@ -60,7 +60,7 @@ class ChannelListPage extends Component {
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchChannelList(currentPage)
   }
 
   handleActions = (type, item) => {

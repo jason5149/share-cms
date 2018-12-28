@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Button } from 'antd'
+import { Button, Modal, message } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
 import { BASE_PATH } from '@util/const'
+
+const { confirm: Confirm } = Modal
 
 @inject(
   'PrizeModel',
@@ -58,16 +60,38 @@ class PrizeListPage extends Component {
   }
 
   handlePageChange = currentPage => {
-    console.log(currentPage)
+    this.handleSearchPrizeList(currentPage)
   }
 
   handleActions = (type, item) => {
-    const { history } = this.props
+    const { history, PrizeModel } = this.props
+    const { deletePrize } = PrizeModel
 
     if (type === 'create') {
       history.push(`${ BASE_PATH }/app/prize/create`)
     } else if (type === 'edit') {
       history.push(`${ BASE_PATH }/app/prize/${ item.id }?mode=edit`)
+    } else if (type === 'remove') {
+      Confirm({
+        title:      '删除奖品',
+        content:    '您确认要删除该奖品吗？',
+        okText:     '确认',
+        cancelText: '取消',
+        onOk:       async() => {
+          const { id } = item
+          const result = await deletePrize({ id })
+
+          if (result) {
+            message.success('删除成功')
+
+            this.handleSearchPrizeList()
+          }
+        },
+        onCancel() {
+          console.log('Cancel Remove')
+        },
+      })
+      
     }
   }
 

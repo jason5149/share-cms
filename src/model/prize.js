@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { observable, action } from 'mobx'
 import { Badge, message } from 'antd'
-import { queryPrizeList, queryPrizeDetail, createPrize, updatePrize } from '@service/prize'
+import { queryPrizeList, queryPrizeDetail, createPrize, updatePrize, deletePrize } from '@service/prize'
 import { PRIZE_TYPE_OPTIONS, PRIZE_TYPE_DESC } from '@util/const'
 
 class PrizeModel {
@@ -94,6 +94,18 @@ class PrizeModel {
   @action
   updatePrize = async params => {
     const result = await updatePrize(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
+  }
+
+  @action
+  deletePrize = async params => {
+    const result = await deletePrize(params)
 
     if (result.code !== '10000') {
       message.error(result.message)

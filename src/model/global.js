@@ -126,6 +126,10 @@ class GlobalModel {
       title: '推广中心',
       child: [
         {
+          key:   '/app/promotion/config',
+          title: '推广配置',
+        },
+        {
           key:   '/app/promotion/channel-list',
           title: '渠道列表',
         },
