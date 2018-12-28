@@ -175,15 +175,16 @@ class PageForm extends Component {
       src,
       limit,
       value, 
-      required,
+      required = false,
       placeholder,
       validateMessage,
     } = item
+    const options = {}
 
-    const options = {
-      rules: [
+    if (required) {
+      options.rules = [
         { required, message: validateMessage },
-      ],
+      ]
     }
 
     if (['input', 'radio', 'switch', 'date'].indexOf(type) !== -1) {
@@ -197,6 +198,10 @@ class PageForm extends Component {
       options.initialValue = preview
       options.valuePropName = 'fileList'
       options.getValueFromEvent = this.handleNormFile
+    }
+
+    if (label === '广告图链接地址') {
+      console.log(options)
     }
 
     if (type === 'input') {

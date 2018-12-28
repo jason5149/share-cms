@@ -49,6 +49,7 @@ class PromotionModel {
     { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
   ]
 
+  @action
   queryConfig = async () => {
     const result = await queryConfig()
 
@@ -57,7 +58,7 @@ class PromotionModel {
       return
     }
 
-    this.config = result.body
+    return this.fillConfigForm(result.body)
   }
 
   @action
@@ -133,6 +134,19 @@ class PromotionModel {
       message.error(result.message)
       return
     }
+
+    return true
+  }
+
+  @action
+  fillConfigForm = item => {
+    this.configFormItems.map(config => {
+      if (config.field in item) {
+        config.value = item[config.field]
+      }
+
+      return config
+    })
 
     return true
   }
