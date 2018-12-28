@@ -1,4 +1,5 @@
 const express = require('express')
+const compression = require('compression')
 const morgan = require('morgan')
 
 const app = express()
@@ -9,6 +10,7 @@ const PORT = 4444
 const staticFile = express.static('dist')
 
 app.use(morgan())
+app.use(compression())
 app.use(staticFile)
 app.use(history({
   disableDotRule:    true,
