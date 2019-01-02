@@ -30,8 +30,8 @@ class BasicLayout extends Component {
 
     return (
       <Layout style={{ height: '100vh' }}>
-        <Sider 
-          className={ `sider-container ${ collapsed ? 'close' : 'open' }` } 
+        <Sider
+          className={ `sider-container ${ collapsed ? 'close' : 'open' }` }
           width={ collapsed ? 80 : 256 }
           trigger={ null }
           collapsible
@@ -65,6 +65,9 @@ class BasicLayout extends Component {
               <Route path={ `${ url }/mission/basic-list` } component={ AsyncComponent(() => import('@page/Mission/List')) } />
               <Route path={ `${ url }/mission/exchange-list` } component={ AsyncComponent(() => import('@page/Mission/ExchangeList')) } />
               {/* 任务管理 */}
+              {/* 关注页管理 */}
+              <Route path={ `${ url }/follow/config` } component={ AsyncComponent(() => import('@page/Follow/Config')) } />
+              {/* 关注页管理 */}
               {/* 热文库管理 */}
               {/* <Route path={ `${ url }/article/list` } component={ AsyncComponent(() => import('@page/Article/List')) } /> */}
               <Route path={ `${ url }/article/news-list` } component={ AsyncComponent(() => import('@page/Article/NewsList')) } />

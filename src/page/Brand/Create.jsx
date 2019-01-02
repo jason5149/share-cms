@@ -39,11 +39,11 @@ class CreateBrandPage extends Component {
     if (error) return
     const { BrandModel } = this.props
     const { createBrand } = BrandModel
-    const { 
+    const {
       name,
       isImplantation,
       logoImage,
-      brandAdImage, 
+      brandAdImage,
       brandAdUrl,
       standardIntegral,
       readNumber,
@@ -93,8 +93,8 @@ class CreateBrandPage extends Component {
       <div className='view-container'>
         <PageHeader title='添加品牌商' extraBreadcrumbItems={ breadcrumbItems } />
         <PageContent>
-          <PageForm 
-            data={ brandFormItems } 
+          <PageForm
+            data={ brandFormItems }
             onPreviewUpload={ setPreviewImg }
             onSubmit={ this.handleSubmit }
             onCancel={ this.handleCancel }

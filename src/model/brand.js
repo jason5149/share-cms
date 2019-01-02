@@ -15,18 +15,18 @@ class BrandModel {
   @observable
   brandListColumn = [
     { title: '品牌商名称', dataIndex: 'name', key: 'name' },
-    { 
-      title:     '是否植入广告', 
-      dataIndex: 'isImplantation', 
-      key:       'isImplantation', 
-      render:    text => text === 1 ? '是' : '否', 
+    {
+      title:     '是否植入广告',
+      dataIndex: 'isImplantation',
+      key:       'isImplantation',
+      render:    text => text === 1 ? '是' : '否',
     },
     { title: '目标阅读数', dataIndex: 'readNumber', key: 'readNumber' },
-    {  
-      title:     '状态', 
-      dataIndex: 'status', 
-      key:       'status', 
-      render:    text => text === 1 ? <Badge status='success' text='正常' /> : <Badge status='error' text='关闭' />, 
+    {
+      title:     '状态',
+      dataIndex: 'status',
+      key:       'status',
+      render:    text => text === 1 ? <Badge status='success' text='正常' /> : <Badge status='error' text='关闭' />,
     },
     { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
   ]
@@ -47,7 +47,7 @@ class BrandModel {
     { label: '有效时间', field: 'validDate', type: 'date', subType: 'range', value: [], required: true, validateMessage: '请选择有效时间' },
     { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
   ]
-  
+
   @action
   queryBrandList = async params => {
     const result = await queryBrandList(params)
@@ -149,11 +149,11 @@ class BrandModel {
         } else if (brand.type === 'switch') {
           brand.value = !!item[brand.field]
         } else if (brand.type === 'upload') {
-          brand.preview = [{ 
-            uid:    '-1', 
-            name:   `${ brand.field }.png`, 
-            status: 'done', 
-            url:    item[brand.field], 
+          brand.preview = [{
+            uid:    '-1',
+            name:   `${ brand.field }.png`,
+            status: 'done',
+            url:    item[brand.field],
           }]
         }
       } else if (item.implantationStartTime && item.implantationEndTime) {
