@@ -20,6 +20,21 @@ class CreatePrizePage extends Component {
     ],
   }
 
+  componentDidMount() {
+    this.init()
+  }
+
+  init() {
+    this.handleInitForm()
+  }
+
+  handleInitForm = () => {
+    const { PrizeModel } = this.props
+    const { emptyPrizeForm } = PrizeModel
+
+    emptyPrizeForm()
+  }
+
   handleSubmit = async (error, values) => {
     const { PrizeModel } = this.props
     const { createPrize } = PrizeModel

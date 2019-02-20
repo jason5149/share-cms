@@ -45,6 +45,7 @@ class ConfigPage extends Component {
     const { updateConfig } = PromotionModel
 
     const result = await updateConfig(values)
+    
     if (result) {
       this.handleSearchPromotionConfig()
 

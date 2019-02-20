@@ -139,7 +139,7 @@ class PromotionModel {
   }
 
   @action
-  fillConfigForm = item => {
+  fillConfigForm = (item = [{ readCount: 0 }]) => {
     this.configFormItems.map(config => {
       if (config.field in item) {
         config.value = item[config.field]

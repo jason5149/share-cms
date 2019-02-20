@@ -116,6 +116,26 @@ class PrizeModel {
   }
 
   @action
+  emptyPrizeForm = () => {
+    this.prizeFormItems = [
+      { label: '奖品名称', field: 'name', type: 'input', subType: 'string', placeholder: '请输入奖品名称', required: true, validateMessage: '请输入奖品名称' },
+      { label: '奖品类型', field: 'type', type: 'radio', src: PRIZE_TYPE_OPTIONS, value: 1, required: true, validateMessage: '请选择奖品类型' },
+      { label: '奖品品名', field: 'productName', type: 'input', subType: 'string', placeholder: '请输入奖品品名', required: true, validateMessage: '请输入奖品品名' },
+      { label: '奖品品牌', field: 'brand', type: 'input', subType: 'string', placeholder: '请输入奖品品牌', required: true, validateMessage: '请输入奖品品牌' },
+      { label: '奖品型号', field: 'model', type: 'input', subType: 'string', placeholder: '请输入奖品型号', required: true, validateMessage: '请输入奖品型号' },
+      { label: '奖品规格', field: 'specifications', type: 'input', subType: 'string', placeholder: '请输入奖品规格', required: true, validateMessage: '请输入奖品规格' },
+      { label: '奖品兑换积分', field: 'convertibility', type: 'input', subType: 'number', placeholder: '请输入奖品兑换积分', required: true, validateMessage: '请输入奖品兑换积分' },
+      { label: '奖品库存', field: 'stock', type: 'input', subType: 'number', placeholder: '请输入奖品库存', required: true, validateMessage: '请输入奖品库存' },
+      { label: '市场参考价', field: 'marketPrice', type: 'input', subType: 'number', placeholder: '请输入奖品市场参考价', required: true, validateMessage: '请输入奖品市场参考价' },
+      { label: '奖品封面图', field: 'coverImg', type: 'upload', subType: 'single', preview: [], required: true, validateMessage: '请上传奖品封面图' },
+      { label: '奖品轮播图', field: 'bannerImg', type: 'upload', subType: 'multiple', preview: [], limit: 5, required: true, validateMessage: '请上传奖品封面图' },
+      { label: '奖品详情图', field: 'detailImg', type: 'upload', subType: 'multiple', preview: [], limit: 5, required: true, validateMessage: '请上传奖品详情图' },
+      { label: '排序', field: 'sort', type: 'input', subType: 'number', placeholder: '请设置奖品排序', required: true, validateMessage: '请设置奖品排序' },
+      { label: '状态', field: 'status', type: 'switch', desc: ['开', '关'], value: true, required: true, validateMessage: '请选择状态' },
+    ]
+  }
+
+  @action
   setPreviewImg = (label, file) => {
     this.prizeFormItems.map(value => {
       if (value.label === label) {
