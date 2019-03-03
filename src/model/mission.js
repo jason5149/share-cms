@@ -2,7 +2,15 @@ import React from 'react'
 import moment from 'moment'
 import { observable, action } from 'mobx'
 import { Badge, message } from 'antd'
-import { queryMissionList, queryExchangeList } from '@service/mission'
+import { 
+  queryMissionList, 
+  queryExchangeList, 
+  queryExpressList, 
+  queryExpressDetail, 
+  createExpress,
+  updateExpress,
+  deleteExpress,
+} from '@service/mission'
 
 class MissionModel {
   @observable
@@ -67,6 +75,21 @@ class MissionModel {
   @observable
   exchangeListPageNum = 1
 
+  @observable
+  expressList = []
+
+  @observable
+  expressListTotal = 0
+
+  @observable
+  expressListColumn = [
+    { title: '快递公司', dataIndex: 'name', key: 'name' },
+    { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
+  ]
+
+  @observable
+  expressListPageNum = 1
+
   @action
   queryMissionList = async params => {
     const result = await queryMissionList(params)
@@ -99,6 +122,71 @@ class MissionModel {
       this.exchangeList = result.body.list
       this.exchangeListTotal = result.body.page.totalNum
     }
+  }
+
+  @action
+  queryExpressList = async params => {
+    const result = await queryExpressList(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    this.expressListPageNum = params.currentPage
+
+    if (result.body) {
+      this.expressList = result.body.list
+      this.expressListTotal = result.body.page.totalNum
+    }
+  }
+
+  @action
+  queryExpressDetail = async params => {
+    const result = await queryExpressDetail(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return result.body
+  }
+
+  @action
+  createExpress = async params => {
+    const result = await createExpress(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
+  }
+
+  @action
+  updateExpress = async params => {
+    const result = await updateExpress(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
+  }
+
+  @action
+  deleteExpress = async params => {
+    const result = await deleteExpress(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
   }
 
   @action

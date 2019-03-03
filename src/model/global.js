@@ -77,6 +77,10 @@ class GlobalModel {
           key:   '/app/mission/exchange-list',
           title: '积分兑换列表',
         },
+        {
+          key:   '/app/mission/express-list',
+          title: '快递配置',
+        },
       ],
     },
     {
