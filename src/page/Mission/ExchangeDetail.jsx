@@ -50,7 +50,7 @@ class ExchangeDetailPage extends Component {
 
     //   e.clearSelection()
     // })
-    new ClipboardJS('#copy-btn').on('success', e => {
+    (new ClipboardJS('#copy-btn')).on('success', e => {
       message.success('复制成功', 1)
 
       e.clearSelection()
