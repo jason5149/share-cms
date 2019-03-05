@@ -5,12 +5,15 @@ import { Badge, message } from 'antd'
 import { 
   queryMissionList, 
   queryExchangeList, 
+  queryExchangeDetail,
+  deliveryShip,
   queryExpressList, 
   queryExpressDetail, 
   createExpress,
   updateExpress,
   deleteExpress,
 } from '@service/mission'
+import { SHIPMENT_TYPE_DESC } from '../util/const'
 
 class MissionModel {
   @observable
@@ -58,7 +61,12 @@ class MissionModel {
     { title: '数量', dataIndex: 'prizeCount', key: 'prizeCount' },
     { title: '兑奖积分', dataIndex: 'reprintCount', key: 'reprintCount' },
     { title: '使用积分', dataIndex: 'shareCount', key: 'shareCount' },
-    { title: '发货类型', dataIndex: 'shipmentType', key: 'shipmentType' },
+    { 
+      title:     '发货类型', 
+      dataIndex: 'shipmentType', 
+      key:       'shipmentType', 
+      render:    text => SHIPMENT_TYPE_DESC[text],
+    },
     // { title: '收件人', dataIndex: 'shareCount', key: 'shareCount' },
     { title: '快递公司', dataIndex: 'expressCompany', key: 'expressCompany' },
     { title: '快递单号', dataIndex: 'expressNo', key: 'expressNo' },
@@ -74,6 +82,9 @@ class MissionModel {
 
   @observable
   exchangeListPageNum = 1
+
+  @observable
+  exchangeDetail = null
 
   @observable
   expressList = []
@@ -122,6 +133,30 @@ class MissionModel {
       this.exchangeList = result.body.list
       this.exchangeListTotal = result.body.page.totalNum
     }
+  }
+
+  @action
+  queryExchangeDetail = async params => {
+    const result = await queryExchangeDetail(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    this.exchangeDetail = result.body
+  }
+
+  @action
+  deliveryShip = async params => {
+    const result = await deliveryShip(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    return true
   }
 
   @action

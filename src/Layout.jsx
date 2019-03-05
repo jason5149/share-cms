@@ -64,6 +64,7 @@ class BasicLayout extends Component {
               {/* 任务管理 */}
               <Route path={ `${ url }/mission/basic-list` } component={ AsyncComponent(() => import('@page/Mission/List')) } />
               <Route path={ `${ url }/mission/exchange-list` } component={ AsyncComponent(() => import('@page/Mission/ExchangeList')) } />
+              <Route path={ `${ url }/mission/exchange/:id` } component={ AsyncComponent(() => import('@page/Mission/ExchangeDetail')) } />
               <Route path={ `${ url }/mission/express-list` } component={ AsyncComponent(() => import('@page/Mission/ExpressList')) } />
               {/* 任务管理 */}
               {/* 关注页管理 */}

@@ -178,6 +178,7 @@ class PageForm extends Component {
       required = false,
       placeholder,
       validateMessage,
+      disabled = false,
     } = item
     const options = {}
 
@@ -210,7 +211,7 @@ class PageForm extends Component {
           <Col span={ 16 } offset={ 4 } key={ label }>
             <FormItem label={ label } { ...formItemLayout }>
               {getFieldDecorator(field, options)(
-                <Input placeholder={ placeholder } />   
+                <Input placeholder={ placeholder } disabled={ disabled } />   
             )}
             </FormItem>
           </Col>
@@ -220,7 +221,7 @@ class PageForm extends Component {
           <Col span={ 16 } offset={ 4 } key={ label }>
             <FormItem label={ label } { ...formItemLayout }>
               {getFieldDecorator(field, options)(
-                <InputNumber style={{ width: 200 }} placeholder={ placeholder } />   
+                <InputNumber style={{ width: 200 }} placeholder={ placeholder } disabled={ disabled } />   
             )}
             </FormItem>
           </Col>

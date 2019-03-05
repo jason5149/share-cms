@@ -50,3 +50,14 @@ export const STATUS_DESC = {
   0: '关闭',
   1: '正常',
 }
+
+export const SHIPMENT_TYPE_DESC = {
+  1: '未寄出',
+  2: '已寄出',
+  3: '已签收',
+}
+
+export const EXCHANGE_STATUS_DESC = {
+  1: '平台',
+  2: '品牌商',
+}

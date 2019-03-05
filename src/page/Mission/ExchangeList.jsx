@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-// import { Button, Modal, message } from 'antd'
+import { Button } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
-// import { BASE_PATH } from '@util/const'
+import { BASE_PATH } from '@util/const'
 
 // const { confirm: Confirm } = Modal
 
@@ -18,25 +18,25 @@ class ExchangeListPage extends Component {
       { name: '任务管理' },
       { name: '积分兑换列表' },
     ],
-    // actionsListColumn: [
-    //   { 
-    //     title:     '操作', 
-    //     dataIndex: 'actions', 
-    //     key:       'actions', 
-    //     render:    (text, record) => {
-    //       return (
-    //         <div className='actions-btn-container'>
-    //           <Button size='small' type='primary' onClick={ () => this.handleActions('edit', record) }>
-    //             编辑
-    //           </Button>
-    //           <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
-    //             删除
-    //           </Button>
-    //         </div>
-    //       )
-    //     },
-    //   },
-    // ],
+    actionsListColumn: [
+      { 
+        title:     '操作', 
+        dataIndex: 'actions', 
+        key:       'actions', 
+        render:    (text, record) => {
+          return (
+            <div className='actions-btn-container'>
+              <Button size='small' type='primary' onClick={ () => this.handleActions('check', record) }>
+                查看/发货
+              </Button>
+              {/* <Button size='small' type='danger' onClick={ () => this.handleActions('remove', record) }>
+                删除
+              </Button> */}
+            </div>
+          )
+        },
+      },
+    ],
   }
 
   componentDidMount() {
@@ -63,41 +63,20 @@ class ExchangeListPage extends Component {
     this.handleSearchExchangeList(currentPage)
   }
 
-  // handleActions = (type, item) => {
-  //   const { history, MissionModel } = this.props
-  //   const { deleteBrand } = MissionModel
+  handleActions = (type, item) => {
+    const { history } = this.props
 
-  //   if (type === 'create') {
-  //     history.push(`${ BASE_PATH }/app/brand/create`)
-  //   } else if (type === 'edit') {
-  //     history.push(`${ BASE_PATH }/app/brand/${ item.id }?mode=${ type }`)
-  //   } else if (type === 'remove') {
-  //     Confirm({
-  //       title:      '删除品牌商',
-  //       content:    '您确认要该删除品牌商吗？',
-  //       okText:     '确认',
-  //       cancelText: '取消',
-  //       onOk:       async() => {
-  //         const { id } = item
-  //         const result = await deleteBrand({ id })
+    if (type === 'check') {
+      const { id } = item
 
-  //         if (result) {
-  //           message.success('删除成功')
-
-  //           this.handleSearchBrandList()
-  //         }
-  //       },
-  //       onCancel() {
-  //         console.log('Cancel Remove')
-  //       },
-  //     })
-  //   }
-  // }
+      history.push(`${ BASE_PATH }/app/mission/exchange/${ id }`)
+    }
+  }
 
   render() {
     const { MissionModel } = this.props
-    // const { breadcrumbItems, actionsListColumn } = this.state
-    const { breadcrumbItems } = this.state
+    const { breadcrumbItems, actionsListColumn } = this.state
+    // const { breadcrumbItems } = this.state
     const { 
       exchangeList, 
       exchangeListTotal, 
@@ -115,7 +94,7 @@ class ExchangeListPage extends Component {
           <PageTable 
             rowKey='id'
             total={ exchangeListTotal }
-            columns={ exchangeListColumn }
+            columns={ exchangeListColumn.concat(actionsListColumn) }
             pageNum={ exchangeListPageNum }
             pageSize={ 10 }
             dataSource={ exchangeList }

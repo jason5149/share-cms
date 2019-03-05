@@ -189,6 +189,8 @@ class PrizeModel {
   }
 
   fillPrizeForm = item => {
+    this.prizeFormItems.push({ label: '剩余库存', field: 'surplusStock', type: 'input', subType: 'number', disabled: true })
+    
     this.prizeFormItems.map(prize => {
       if (prize.field in item) {
         if (['radio', 'input'].indexOf(prize.type) !== -1) {
