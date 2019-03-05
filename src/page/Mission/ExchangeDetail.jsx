@@ -42,15 +42,8 @@ class ExchangeDetailPage extends Component {
   }
 
   init() {
-    // this.clipboard = new ClipboardJS('#copy-btn')
-    // this.clipboard('#copy-btn')
-    // console.log(this.clipboard('#copy-btn'))
-    // this.clipboard.on('success', e => {
-    //   message.success('复制成功', 1)
-
-    //   e.clearSelection()
-    // })
-    (new ClipboardJS('#copy-btn')).on('success', e => {
+    this.clipboard = new ClipboardJS('#copy-btn')
+    this.clipboard.on('success', e => {
       message.success('复制成功', 1)
 
       e.clearSelection()
