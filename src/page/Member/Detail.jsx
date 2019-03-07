@@ -34,10 +34,11 @@ class MemberDetalPage extends Component {
 
   handleSearchMemberDetail = () => {
     const { MemberModel, match } = this.props
-    const { queryMemberDetail } = MemberModel
+    const { queryMemberDetail, queryMemberStatistic } = MemberModel
     const { params } = match
 
     queryMemberDetail(params)
+    queryMemberStatistic(params)
   }
 
   handleTabChange = tab => {
@@ -113,6 +114,7 @@ class MemberDetalPage extends Component {
       memberListColumn,
       memberListPageNum, 
       memberDetail,
+      memberStatistic,
     } = MemberModel
     const { 
       missionList, 
@@ -142,8 +144,21 @@ class MemberDetalPage extends Component {
       cancelFollowTime,
       doingJobCount,
       finishedJobCount,
-      integral,
+      // integral,
     } = memberDetail
+
+    if (!memberStatistic) return null
+
+    const { 
+      allIntegral,
+      integral,
+      shareCount,
+      shareReprintCount,
+      userDoingJobCount,
+      userDoneJobCount,
+      userJobCount,
+    } = memberStatistic
+
 
     return (
       <div className='view-container'>
@@ -222,27 +237,27 @@ class MemberDetalPage extends Component {
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总阅读：</span>
-                <span className='desc' />
+                <span className='desc'>{shareCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总转载：</span>
-                <span className='desc' />
+                <span className='desc'>{shareReprintCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>任务数：</span>
-                <span className='desc'>{doingJobCount + finishedJobCount}</span>
+                <span className='desc'>{userDoingJobCount + userDoneJobCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>进行中：</span>
-                <span className='desc'>{doingJobCount}</span>
+                <span className='desc'>{userDoingJobCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>已完成：</span>
-                <span className='desc'>{finishedJobCount}</span>
+                <span className='desc'>{userDoneJobCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总积分：</span>
-                <span className='desc'>{integral}</span>
+                <span className='desc'>{allIntegral}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总零钱：</span>
@@ -250,7 +265,7 @@ class MemberDetalPage extends Component {
               </Col>
               <Col span={ 12 }>
                 <span className='label'>积分：</span>
-                <span className='desc' />
+                <span className='desc'>{integral}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>零钱：</span>

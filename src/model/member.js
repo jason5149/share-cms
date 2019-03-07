@@ -1,7 +1,11 @@
 import moment from 'moment'
 import { observable, action } from 'mobx'
 import { message } from 'antd'
-import { queryMemberList, queryMemberDetail } from '@service/member'
+import { 
+  queryMemberList, 
+  queryMemberDetail, 
+  queryMemberStatistic, 
+} from '@service/member'
 
 class MemberModel {
   @observable
@@ -35,6 +39,9 @@ class MemberModel {
   @observable
   memberDetail = null
 
+  @observable
+  memberStatistic = null
+
   @action
   queryMemberList = async params => {
     const result = await queryMemberList(params)
@@ -66,6 +73,18 @@ class MemberModel {
     }
 
     this.memberDetail = result.body
+  }
+
+  @action
+  queryMemberStatistic = async params => {
+    const result = await queryMemberStatistic(params)
+
+    if (result.code !== '10000') {
+      message.error(result.message)
+      return
+    }
+
+    this.memberStatistic = result.body
   }
 }
 
