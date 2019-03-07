@@ -156,6 +156,7 @@ class MemberDetalPage extends Component {
       shareReprintCount,
       userDoingJobCount,
       userDoneJobCount,
+      shareReadCount,
       // userJobCount,
     } = memberStatistic
 
@@ -237,7 +238,7 @@ class MemberDetalPage extends Component {
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总阅读：</span>
-                <span className='desc'>{shareCount}</span>
+                <span className='desc'>{shareReadCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总转载：</span>
