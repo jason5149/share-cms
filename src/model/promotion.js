@@ -26,6 +26,7 @@ class PromotionModel {
 
   @observable
   channelListColumn = [
+    { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: '名称', dataIndex: 'name', key: 'name' },
     { title: '参数', dataIndex: 'param', key: 'param' },
     { title: '链接', dataIndex: 'url', key: 'url' },
