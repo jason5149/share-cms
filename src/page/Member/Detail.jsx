@@ -152,7 +152,7 @@ class MemberDetalPage extends Component {
     const { 
       allIntegral,
       integral,
-      shareCount,
+      // shareCount,
       shareReprintCount,
       userDoingJobCount,
       userDoneJobCount,
