@@ -142,8 +142,8 @@ class MemberDetalPage extends Component {
       firstFollowTime,
       lastFollowTime,
       cancelFollowTime,
-      doingJobCount,
-      finishedJobCount,
+      // doingJobCount,
+      // finishedJobCount,
       // integral,
     } = memberDetail
 
@@ -156,7 +156,7 @@ class MemberDetalPage extends Component {
       shareReprintCount,
       userDoingJobCount,
       userDoneJobCount,
-      userJobCount,
+      // userJobCount,
     } = memberStatistic
 
 
