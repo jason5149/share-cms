@@ -5,7 +5,7 @@ import { Card, Row, Col, Tabs } from 'antd'
 import PageHeader from '@component/PageHeader'
 import PageContent from '@component/PageContent'
 import PageTable from '@component/PageTable'
-import { BASE_PATH } from '@util/const'
+import { BASE_PATH, PARTNER_TYPE_DESC } from '@util/const'
 
 const { TabPane } = Tabs
 
@@ -137,7 +137,8 @@ class MemberDetalPage extends Component {
       province,
       mobile,
       city,
-      partnerId,
+      // partnerId,
+      partnerType,
       location,
       firstFollowTime,
       lastFollowTime,
@@ -201,7 +202,8 @@ class MemberDetalPage extends Component {
               </Col>
               <Col span={ 12 }>
                 <span className='label'>用户来源：</span>
-                <span className='desc'>{partnerId}</span>
+                {/* <span className='desc'>{partnerId}</span> */}
+                <span className='desc'>{PARTNER_TYPE_DESC[partnerType]}</span>
               </Col>
               {/* <Col span={ 12 }>
                 语言：

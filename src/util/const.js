@@ -61,3 +61,9 @@ export const EXCHANGE_STATUS_DESC = {
   1: '平台',
   2: '品牌商',
 }
+
+export const PARTNER_TYPE_DESC = {
+  1: '自己关注',
+  2: '老带新',
+  3: '渠道推广',
+}
