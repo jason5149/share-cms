@@ -151,6 +151,8 @@ class MemberDetalPage extends Component {
     if (!memberStatistic) return null
 
     const { 
+      loginCount,
+      lastLoginTime,
       allIntegral,
       integral,
       // shareCount,
@@ -232,11 +234,13 @@ class MemberDetalPage extends Component {
             <Row gutter={ 24 }>
               <Col span={ 12 }>
                 <span className='label'>最近一次访问平台时间：</span>
-                <span className='desc' />
+                {/* <span className='desc' /> */}
+                <span className='desc'>{lastLoginTime}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>访问平台次数：</span>
-                <span className='desc' />
+                {/* <span className='desc' /> */}
+                <span className='desc'>{loginCount}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>总阅读：</span>
