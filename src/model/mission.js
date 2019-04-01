@@ -30,7 +30,8 @@ class MissionModel {
     { title: '达标阅读数', dataIndex: 'jhNews.readCount', key: 'jhNews.readCount' },
     // { title: '达标阅读数', dataIndex: 'newsReadCount', key: 'newsReadCount' },
     // { title: '赠送阅读数', dataIndex: 'newsShareCount', key: 'newsShareCount' },
-    { title: '赠送阅读数', dataIndex: 'jhNews.shareCount', key: 'jhNews.shareCount' },
+    // { title: '赠送阅读数', dataIndex: 'jhNews.shareCount', key: 'jhNews.shareCount' },
+    { title: '赠送阅读数', dataIndex: 'jhNews.operReadCount  ', key: 'jhNews.operReadCount  ' },
     { title: '阅读数', dataIndex: 'readCount', key: 'readCount' },
     { title: '转载数', dataIndex: 'reprintCount', key: 'reprintCount' },
     { title: '分享次数', dataIndex: 'shareCount', key: 'shareCount' },
@@ -77,7 +78,7 @@ class MissionModel {
       render:    text => text === 1 ? <Badge status='success' text='正常' /> : <Badge status='error' text='关闭' />, 
     },
     { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
-    { title: '发货时间', dataIndex: 'shiipmentTime', key: 'shiipmentTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
+    { title: '发货时间', dataIndex: 'shipmentTime', key: 'shipmentTime', render: text => text ? moment(text).format('YYYY-MM-DD HH:mm:ss') : '' },
   ]
 
   @observable
