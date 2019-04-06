@@ -52,7 +52,7 @@ class MemberModel {
     // { title: '达标阅读数', dataIndex: 'newsReadCount', key: 'newsReadCount' },
     // { title: '赠送阅读数', dataIndex: 'newsShareCount', key: 'newsShareCount' },
     // { title: '赠送阅读数', dataIndex: 'jhNews.shareCount', key: 'jhNews.shareCount' },
-    { title: '赠送阅读数', dataIndex: 'jhNews.operReadCount  ', key: 'jhNews.operReadCount  ' },
+    { title: '赠送阅读数', dataIndex: 'operReadCount  ', key: 'operReadCount  ' },
     { title: '阅读数', dataIndex: 'readCount', key: 'readCount' },
     { title: '转载数', dataIndex: 'reprintCount', key: 'reprintCount' },
     { title: '分享次数', dataIndex: 'shareCount', key: 'shareCount' },
