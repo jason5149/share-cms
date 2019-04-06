@@ -224,7 +224,7 @@ class MemberDetalPage extends Component {
               </Col>
               <Col span={ 12 }>
                 <span className='label'>取消关注时间：</span>
-                <span className='desc'>{}</span>
+                {/* <span className='desc'>{}</span> */}
                 <span className='desc'>{cancelFollowTime && moment(cancelFollowTime).format('YYYY-MM-DD HH:mm:ss')}</span>
               </Col>
               <Col span={ 12 }>
@@ -239,7 +239,7 @@ class MemberDetalPage extends Component {
               <Col span={ 12 }>
                 <span className='label'>最近一次访问平台时间：</span>
                 {/* <span className='desc' /> */}
-                <span className='desc'>{lastLoginTime}</span>
+                <span className='desc'>{lastLoginTime && moment(lastLoginTime).format('YYYY-MM-DD HH:mm:ss')}</span>
               </Col>
               <Col span={ 12 }>
                 <span className='label'>访问平台次数：</span>
