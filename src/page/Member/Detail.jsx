@@ -113,18 +113,18 @@ class MemberDetalPage extends Component {
       memberListTotal, 
       memberListColumn,
       memberListPageNum, 
-      missionList, 
-      missionListTotal, 
-      missionListColumn,
-      missionListPageNum, 
-      memberDetail,
-      memberStatistic,
-    } = MemberModel
-    const { 
       // missionList, 
       // missionListTotal, 
       // missionListColumn,
       // missionListPageNum, 
+      memberDetail,
+      memberStatistic,
+    } = MemberModel
+    const { 
+      missionList, 
+      missionListTotal, 
+      missionListColumn,
+      missionListPageNum, 
       exchangeList, 
       exchangeListTotal, 
       exchangeListColumn,
