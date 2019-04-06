@@ -1,7 +1,6 @@
-import React from 'react'
 import moment from 'moment'
 import { observable, action } from 'mobx'
-import { Badge, message } from 'antd'
+import { message } from 'antd'
 import { 
   queryMemberList, 
   queryMemberDetail, 
@@ -36,38 +35,6 @@ class MemberModel {
 
   @observable
   memberListPageNum = 1
-
-  @observable
-  missionList = []
-
-  @observable
-  missionListTotal = 0
-
-  @observable
-  missionListColumn = [
-    { title: '任务流水号', dataIndex: 'jobNo', key: 'jobNo' },
-    { title: '任务标题', dataIndex: 'newsTitle', key: 'newsTitle' },
-    { title: '任务人', dataIndex: 'userName', key: 'userName' },
-    { title: '达标阅读数', dataIndex: 'jhNews.readCount', key: 'jhNews.readCount' },
-    // { title: '达标阅读数', dataIndex: 'newsReadCount', key: 'newsReadCount' },
-    // { title: '赠送阅读数', dataIndex: 'newsShareCount', key: 'newsShareCount' },
-    // { title: '赠送阅读数', dataIndex: 'jhNews.shareCount', key: 'jhNews.shareCount' },
-    { title: '赠送阅读数', dataIndex: 'operReadCount  ', key: 'operReadCount  ' },
-    { title: '阅读数', dataIndex: 'readCount', key: 'readCount' },
-    { title: '转载数', dataIndex: 'reprintCount', key: 'reprintCount' },
-    { title: '分享次数', dataIndex: 'shareCount', key: 'shareCount' },
-    {  
-      title:     '状态', 
-      dataIndex: 'status', 
-      key:       'status', 
-      render:    text => text === 1 ? <Badge status='success' text='正常' /> : <Badge status='error' text='关闭' />, 
-    },
-    { title: '创建时间', dataIndex: 'createTime', key: 'createTime', render: text => moment(text).format('YYYY-MM-DD HH:mm:ss') },
-    { title: '完成时间', dataIndex: 'completeTime', key: 'completeTime', render: text => text ? moment(text).format('YYYY-MM-DD HH:mm:ss') : '' },
-  ]
-
-  @observable
-  missionListPageNum = 1
 
   @observable
   memberDetail = null
