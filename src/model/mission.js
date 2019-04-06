@@ -57,8 +57,8 @@ class MissionModel {
     { title: '奖品名称', dataIndex: 'prizeName', key: 'prizeName' },
     { title: '兑奖人', dataIndex: 'userName', key: 'userName' },
     { title: '数量', dataIndex: 'prizeCount', key: 'prizeCount' },
-    { title: '兑奖积分', dataIndex: 'reprintCount', key: 'reprintCount' },
-    { title: '使用积分', dataIndex: 'shareCount', key: 'shareCount' },
+    { title: '兑奖积分', dataIndex: 'intergral', key: 'intergral' },
+    { title: '使用积分', dataIndex: 'useIntergral', key: 'useIntergral' },
     { 
       title:     '发货类型', 
       dataIndex: 'shipmentType', 
